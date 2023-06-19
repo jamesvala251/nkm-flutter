@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "534290823844",
+    "project_id": "nkm-nose-pins-llp-80f0b",
+    "storage_bucket": "nkm-nose-pins-llp-80f0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534290823844:android:ff5197989aa8d73fe0c431",
+        "android_client_info": {
+          "package_name": "com.org.nkm_nose_pins_llp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534290823844-76uhk2hqn5jj38bpld8qhuhjqponvntf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.org.nkm_nose_pins_llp",
+            "certificate_hash": "2f6deeecdc018287519582a1634c41e9a7c10fd6"
+          }
+        },
+        {
+          "client_id": "534290823844-5e60nic30cp3vpoibkldefvb55dsd2u3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZOiCsxdfQxuGfBw-_yku4QOI1bPP2lCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534290823844-5e60nic30cp3vpoibkldefvb55dsd2u3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "534290823844-aqa1il7l223uptv4nb4sn0ahljh4od73.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.org.nkmNosePinsLlp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

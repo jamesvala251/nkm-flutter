@@ -1,0 +1,58 @@
+name: nkm_nose_pins_llp
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  get: ^4.6.5
+  dio: ^5.2.0+1
+  flutter_svg: ^2.0.6
+  flutter_web_browser: ^0.17.1
+  image_picker: ^0.8.7+5
+  permission_handler: ^10.3.0
+  share_plus: ^7.0.2
+  shared_preferences: ^2.1.2
+  url_launcher: ^6.1.11
+  in_app_update: ^4.0.1
+  cached_network_image: ^3.2.3
+  badges: ^3.1.1
+  video_player: ^2.6.1
+  path_provider: ^2.0.15
+  open_file: ^3.3.1
+  firebase_core: ^2.13.1
+  firebase_analytics: ^10.4.2
+  firebase_messaging: ^14.6.2
+  firebase_dynamic_links: ^5.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/svg/
+    - assets/png/flags/
+    - assets/png/
+
+  fonts:
+    - family: proxima_nova_regular
+      fonts:
+        - asset: assets/fonts/proxima_nova_regular.otf
+    - family: proxima_nova_bold
+      fonts:
+        - asset: assets/fonts/proxima_nova_bold.otf
+    - family: proxima_nova_thin
+      fonts:
+        - asset: assets/fonts/proxima_nova_thin.otf
