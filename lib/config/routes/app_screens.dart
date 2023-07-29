@@ -5,13 +5,15 @@ import 'package:nkm_nose_pins_llp/modules/dashboard/screens/category_design_deta
 import 'package:nkm_nose_pins_llp/modules/dashboard/screens/category_design_list_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/screens/dashboard_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/screens/sub_category_design_screen.dart';
+import 'package:nkm_nose_pins_llp/modules/dashboard/screens/update_app_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/screens/video_view_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/screens/zoomable_image_view_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/language/screens/select_language_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/login/screens/login_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/order/screens/order_details_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/order/screens/order_history_screen.dart';
-import 'package:nkm_nose_pins_llp/modules/order/screens/order_response_screen.dart';
+import 'package:nkm_nose_pins_llp/modules/payment/screens/qr_scanner_payment_screen.dart';
+import 'package:nkm_nose_pins_llp/modules/payment/screens/online_payment_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/profile/screens/update_profile_screen.dart';
 import 'package:nkm_nose_pins_llp/modules/register/screens/register_screen.dart';
 
@@ -42,8 +44,12 @@ class AppScreens {
       page: () => const CartScreen(),
     ),
     GetPage(
-      name: AppRoutes.orderResponseScreen,
-      page: () => const OrderResponseScreen(),
+      name: AppRoutes.qrScannerPaymentScreen,
+      page: () => const QrScannerPaymentScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.onlinePaymentScreen,
+      page: () => const OnlinePaymentScreen(),
     ),
     GetPage(
       name: AppRoutes.orderHistoryScreen,
@@ -71,7 +77,11 @@ class AppScreens {
     ),
     GetPage(
       name: AppRoutes.updateProfileScreen,
-      page: () =>  const UpdateProfileScreen(),
+      page: () => const UpdateProfileScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.updateAppScreen,
+      page: () => UpdateAppScreen(),
     ),
   ];
 }

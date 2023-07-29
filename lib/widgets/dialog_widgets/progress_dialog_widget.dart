@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 
 Stack progressWidget({
   String? msg,
@@ -30,7 +31,10 @@ Stack progressWidget({
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(),
+              SpinKitSpinningLines(
+                color: Get.theme.primaryColor,
+                size: 40,
+              ),
               const SizedBox(
                 width: 16,
               ),
@@ -40,7 +44,7 @@ Stack progressWidget({
                   child: Text(
                     msg ?? 'please_wait'.tr,
                     style: TextStyle(
-                      fontSize: Get.textTheme.subtitle1!.fontSize,
+                      fontSize: Get.textTheme.titleMedium!.fontSize,
                     ),
                   ),
                 ),

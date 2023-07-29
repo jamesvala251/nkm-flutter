@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nkm_nose_pins_llp/custom_libs/country_code_lib/country_code_widget.dart';
 
 class CommonStyle {
   static InputDecoration getTextFormFiledDecorationForMobileNoFiled({
     required String label,
     required String hintText,
-    required Function onCountrySelected,
     required BuildContext context,
     required String dialCode,
-    required needToShowFlag,
   }) {
     InputDecoration inputDecoration;
     inputDecoration = InputDecoration(
@@ -30,7 +27,7 @@ class CommonStyle {
                 horizontal: 8.0,
               ),
               child: Icon(
-                Icons.call,
+                Icons.call_rounded,
                 size: 30.0,
                 color: Colors.white60,
               ),
@@ -38,10 +35,12 @@ class CommonStyle {
             const SizedBox(
               height: 8.0,
             ),
-            CountryCodeWidget(
-              onCountrySelected: onCountrySelected,
-              initialDialCode: dialCode,
-              needToShowFlag: needToShowFlag,
+            Text(
+              dialCode,
+              style: TextStyle(
+                fontSize: Get.textTheme.titleMedium!.fontSize,
+                color: Colors.white70,
+              ),
             ),
           ],
         ),

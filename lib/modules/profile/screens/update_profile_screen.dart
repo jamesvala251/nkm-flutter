@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:nkm_nose_pins_llp/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:nkm_nose_pins_llp/modules/profile/controllers/update_profile_controller.dart';
+import 'package:nkm_nose_pins_llp/modules/profile/controllers/profile_controller.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/common_style.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/ui_utils.dart';
 
@@ -14,11 +13,7 @@ class UpdateProfileScreen extends StatefulWidget {
 }
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
-  final DashboardController _dashboardController =
-      Get.find<DashboardController>();
-
-  final UpdateProfileController _updateProfileController =
-      Get.put(UpdateProfileController());
+  final ProfileController _profileController = Get.find<ProfileController>();
 
   final TextEditingController _fullName = TextEditingController();
 
@@ -29,7 +24,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final TextEditingController _panNo = TextEditingController();
 
   final TextEditingController _gstNo = TextEditingController();
-  RxInt radioGroupValue = 0.obs;
+  final RxInt radioGroupValue = 0.obs;
+  final RxBool _isEdited = false.obs;
 
   @override
   void initState() {
@@ -38,18 +34,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   }
 
   void setUserProfileData() {
-    _email.text = _dashboardController.getUserProfileModel!.data!.email;
-    _fullName.text = _dashboardController.getUserProfileModel!.data!.name;
-    _mobileNo.text = _dashboardController.getUserProfileModel!.data!.mobileNo;
-    _panNo.text = _dashboardController.getUserProfileModel!.data!.panNo;
-    _gstNo.text = _dashboardController.getUserProfileModel!.data!.gstNo;
+    _email.text = _profileController.getUserProfileModel!.data!.email;
+    _fullName.text = _profileController.getUserProfileModel!.data!.name;
+    _mobileNo.text = _profileController.getUserProfileModel!.data!.mobileNo;
+    _panNo.text = _profileController.getUserProfileModel!.data!.panNo;
+    _gstNo.text = _profileController.getUserProfileModel!.data!.gstNo;
     radioGroupValue.value =
-        _dashboardController.getUserProfileModel!.data!.userType == "Dealer"
+        _profileController.getUserProfileModel!.data!.userType == "Dealer"
             ? 1
-            : _dashboardController.getUserProfileModel!.data!.userType ==
+            : _profileController.getUserProfileModel!.data!.userType ==
                     "ShopKeeper"
                 ? 2
-                : _dashboardController.getUserProfileModel!.data!.userType ==
+                : _profileController.getUserProfileModel!.data!.userType ==
                         "Semi Dealer"
                     ? 3
                     : 0;
@@ -86,7 +82,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       ),
                       child: CircleAvatar(
                         child: Text(
-                          _dashboardController
+                          _profileController
                               .getUserProfileModel!.data!.profileCircleName,
                           style: TextStyle(
                             fontSize: Get.textTheme.headlineMedium!.fontSize,
@@ -118,6 +114,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   iconData: Icons.person,
                   isDisabled: false,
                 ),
+                onChanged: (_) => isEdited(),
               ),
               const SizedBox(
                 height: 20,
@@ -140,7 +137,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   hintText: 'h_mobile_no'.tr,
                   onCountrySelected: () {},
                   context: context,
-                  dialCode: _updateProfileController.dialCode,
+                  dialCode: _profileController.dialCode,
                   needToShowFlag: false,
                   isDisabled: true,
                 ),
@@ -181,6 +178,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     text: value.toUpperCase(),
                     selection: TextSelection.collapsed(offset: value.length),
                   );
+                  isEdited();
                 },
                 style: TextStyle(
                   color: Get.theme.primaryColor,
@@ -208,6 +206,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     text: value.toUpperCase(),
                     selection: TextSelection.collapsed(offset: value.length),
                   );
+                  isEdited();
                 },
                 style: TextStyle(
                   color: Get.theme.primaryColor,
@@ -318,7 +317,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         width: 8,
                       ),
                       Text(
-                        'semi_dealer'.tr,
+                        'hawkers'.tr,
                         style: TextStyle(
                           color: Get.theme.primaryColor,
                           fontSize: Get.textTheme.titleMedium!.fontSize,
@@ -344,11 +343,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     backgroundColor: Get.theme.primaryColor),
-                child: Text(
-                  'edit'.tr.toUpperCase(),
-                  style: TextStyle(
+                child: Obx(
+                  () => Text(
+                    !_isEdited.value
+                        ? 'edit'.tr.toUpperCase()
+                        : 'save'.tr.toUpperCase(),
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: Get.textTheme.titleMedium!.fontSize),
+                      fontSize: Get.textTheme.titleMedium!.fontSize,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -358,23 +362,44 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 
+  void isEdited() {
+    try {
+      if (_profileController.getUserProfileModel == null ||
+          _profileController.getUserProfileModel!.data == null) {
+        _isEdited.value = true;
+        return;
+      }
+      if (_fullName.text.trim().toLowerCase() ==
+              _profileController.getUserProfileModel!.data!.name
+                  .trim()
+                  .toLowerCase() &&
+          _gstNo.text.trim().toLowerCase() ==
+              _profileController.getUserProfileModel!.data!.gstNo
+                  .trim()
+                  .toLowerCase() &&
+          _panNo.text.trim().toLowerCase() ==
+              _profileController.getUserProfileModel!.data!.panNo
+                  .trim()
+                  .toLowerCase()) {
+        _isEdited.value = false;
+        return;
+      }
+      _isEdited.value = true;
+      return;
+    } catch (_) {}
+  }
+
   void _validateForm() {
     if (_fullName.text.trim().isEmpty) {
       UiUtils.errorSnackBar(message: 'Enter Full Name'.tr);
       return;
     } else {
-      _updateProfileController.updateProfileApiCall(
+      _profileController.updateUserProfileApiCall(
         context: context,
         panNo: _panNo.text.trim(),
         gstNo: _gstNo.text.trim(),
         fullName: _fullName.text.trim(),
       );
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    Get.delete<UpdateProfileController>();
   }
 }

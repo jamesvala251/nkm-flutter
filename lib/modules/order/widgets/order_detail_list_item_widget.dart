@@ -1,11 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 import 'package:nkm_nose_pins_llp/modules/order/models/order_details_model.dart'
-    as orderDetailsModelAs;
+    as order_details_model_as;
 
 class OrderHistoryListItemWidget extends StatelessWidget {
-  final orderDetailsModelAs.Data orderDetailListItemModel;
+  final order_details_model_as.Data orderDetailListItemModel;
   final bool isFirstItem;
   final RxBool isExpanded = false.obs;
 
@@ -71,8 +72,10 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             alignment: Alignment.center,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) =>
-                                    const Center(
-                              child: CircularProgressIndicator(),
+                                     Center(
+                              child: SpinKitSpinningLines(
+                  color: Get.theme.primaryColor,
+                ),
                             ),
                             errorWidget: (context, url, error) => const Icon(
                               Icons.error,
@@ -98,7 +101,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${orderDetailListItemModel.caret} Karat',
+                            orderDetailListItemModel.caret,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleSmall!.fontSize,
                               color: Get.theme.primaryColor,
@@ -149,7 +152,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             height: 1,
                           ),
                           Text(
-                            '${orderDetailListItemModel.caret} Karat',
+                            orderDetailListItemModel.caret,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleMedium!.fontSize,

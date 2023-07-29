@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 import 'package:nkm_nose_pins_llp/modules/order/controllers/order_history_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/order/widgets/order_history_list_item_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/loading_widget.dart';
@@ -124,20 +125,17 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 16.0,
-                    width: 16.0,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.4,
-                    ),
-                  ),
+                   SpinKitSpinningLines(
+                  color: Get.theme.primaryColor,
+                     size: 16.0,
+                ),
                   const SizedBox(
                     width: 8.0,
                   ),
                   Text(
                     'Loading...',
                     style: TextStyle(
-                      fontSize: Get.textTheme.caption!.fontSize,
+                      fontSize: Get.textTheme.bodySmall!.fontSize,
                       letterSpacing: 1.2,
                     ),
                   ),

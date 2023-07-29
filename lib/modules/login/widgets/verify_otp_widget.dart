@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/api/api_implementer.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
+import 'package:nkm_nose_pins_llp/constants/common_constants.dart';
 import 'package:nkm_nose_pins_llp/constants/images_path.dart';
 import 'package:nkm_nose_pins_llp/custom_libs/pin_code_fields_lib/models/animation_type.dart';
 import 'package:nkm_nose_pins_llp/custom_libs/pin_code_fields_lib/models/pin_theme.dart';
@@ -381,19 +382,26 @@ class _VerifyOtpWidgetState extends State<VerifyOtpWidget> {
     await PreferenceObj.setAuthToken(
       authToken: userLoginModel.token!,
     );
+    Get.put(
+      DashboardController(),
+      permanent: true,
+      tag: CommonConstants.dashboardControllerTag,
+    );
     _goToDashboard();
+    return;
   }
 
   void _goToDashboard() {
     Get.offAllNamed(
       AppRoutes.dashboardScreen,
     );
+    return;
   }
 
   void _startCountDownTimer() {
     Future.delayed(const Duration(seconds: 1), () {
       _timerSecond.value--;
-      _remainingMin.value = (_timerSecond.value / 60).toInt();
+      _remainingMin.value = _timerSecond.value ~/ 60;
       _remainingSec.value = _timerSecond.value % 60;
       if (_timerSecond.value <= 0) {
         _timerSecond.value = 120;

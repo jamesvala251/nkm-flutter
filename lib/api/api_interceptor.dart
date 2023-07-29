@@ -13,7 +13,7 @@ class ApiInterceptor extends InterceptorsWrapper {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (err.response!.statusCode == 401) {
+    if (err.response != null && err.response!.statusCode == 401) {
       PreferenceObj.clearPreferenceDataAndLogout();
       UiUtils.errorSnackBar(message: 'Session Expired,Please login again!');
       Get.offAllNamed(

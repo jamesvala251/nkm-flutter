@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
-import 'package:nkm_nose_pins_llp/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:nkm_nose_pins_llp/modules/profile/controllers/profile_controller.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/app_dialogs.dart';
 import 'package:nkm_nose_pins_llp/widgets/loading_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/something_went_wrong_widget.dart';
 
 class ProfileWidget extends StatelessWidget {
-  final DashboardController dashboardController;
+  final ProfileController profileController;
 
   const ProfileWidget({
     Key? key,
-    required this.dashboardController,
+    required this.profileController,
   }) : super(key: key);
 
   @override
@@ -19,17 +19,17 @@ class ProfileWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Obx(
-        () => dashboardController.isProfileLoading.value
+        () => profileController.isProfileLoading.value
             ? const LoadingWidget()
-            : dashboardController.errorStringWhileLoadingProfile.isEmpty
+            : profileController.errorStringWhileLoadingProfile.isEmpty
                 ? _getUserProfileWidget(
                     context: context,
                   )
                 : SomethingWentWrongWidget(
-                    errorTxt: dashboardController
+                    errorTxt: profileController
                         .errorStringWhileLoadingProfile.value,
                     retryOnSomethingWentWrong: () {
-                      dashboardController.getUserProfileApiCall();
+                      profileController.getUserProfileApiCall();
                     },
                   ),
       ),
@@ -74,11 +74,10 @@ class ProfileWidget extends StatelessWidget {
                             ),
                             child: CircleAvatar(
                               child: Text(
-                                dashboardController.getUserProfileModel!.data!
+                                profileController.getUserProfileModel!.data!
                                     .profileCircleName,
                                 style: TextStyle(
-                                  fontSize:
-                                      Get.textTheme.titleLarge!.fontSize,
+                                  fontSize: Get.textTheme.titleLarge!.fontSize,
                                 ),
                               ),
                             ),
@@ -93,11 +92,10 @@ class ProfileWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                dashboardController
+                                profileController
                                     .getUserProfileModel!.data!.name,
                                 style: TextStyle(
-                                  fontSize:
-                                      Get.textTheme.titleLarge!.fontSize,
+                                  fontSize: Get.textTheme.titleLarge!.fontSize,
                                   color: Get.theme.primaryColor,
                                 ),
                               ),
@@ -113,7 +111,7 @@ class ProfileWidget extends StatelessWidget {
                                     width: 2,
                                   ),
                                   Text(
-                                    dashboardController
+                                    profileController
                                         .getUserProfileModel!.data!.userType,
                                     style: TextStyle(
                                       fontSize:
@@ -135,7 +133,7 @@ class ProfileWidget extends StatelessWidget {
                                     width: 2,
                                   ),
                                   Text(
-                                    '+91 ${dashboardController.getUserProfileModel!.data!.mobileNo}',
+                                    '+91 ${profileController.getUserProfileModel!.data!.mobileNo}',
                                     style: TextStyle(
                                       fontSize:
                                           Get.textTheme.titleSmall!.fontSize,
@@ -168,7 +166,7 @@ class ProfileWidget extends StatelessWidget {
                         width: 4,
                       ),
                       Text(
-                        dashboardController.getUserProfileModel!.data!.email,
+                        profileController.getUserProfileModel!.data!.email,
                         style: TextStyle(
                           fontSize: Get.textTheme.titleSmall!.fontSize,
                           color: Get.theme.primaryColor,
@@ -192,15 +190,15 @@ class ProfileWidget extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () => Get.toNamed(AppRoutes.updateProfileScreen)!.then(
-                    (value) {
-                  dashboardController.getUserProfileApiCall();
+                (value) {
+                  profileController.getUserProfileApiCall();
                 },
               ),
               borderRadius: BorderRadius.circular(8),
               highlightColor: Colors.transparent,
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12),
+                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12),
                 child: Row(
                   children: [
                     Icon(
@@ -335,7 +333,7 @@ class ProfileWidget extends StatelessWidget {
                   onCancelBtnClick: () => Get.back(),
                   onLogoutBtnClick: () {
                     Get.back();
-                    dashboardController.logoutApiCall(
+                    profileController.logoutApiCall(
                       context: context,
                     );
                   },
@@ -370,9 +368,11 @@ class ProfileWidget extends StatelessWidget {
           const SizedBox(
             height: 32,
           ),
-          const Text(
-            'v1.0.0',
-            textAlign: TextAlign.center,
+          Obx(
+            () => Text(
+              profileController.versionName.value,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),

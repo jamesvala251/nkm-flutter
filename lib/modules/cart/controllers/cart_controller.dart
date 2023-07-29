@@ -78,12 +78,9 @@ class CartController extends GetxController {
     try {
       GetUserCartItemsModel tempGetUserCartItModel =
           await ApiImplementer.getCartApiCall();
-      // if (tempGetUserCartItModel.success) {
       getUserCartItemsModel.value = tempGetUserCartItModel;
       orderTotal.value = tempGetUserCartItModel.orderTotalAmount;
       cartItemCount.value = getUserCartItemsModel.value!.data.length;
-      return;
-      // }
       return;
     } catch (_) {
       return;

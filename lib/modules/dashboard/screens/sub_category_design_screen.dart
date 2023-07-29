@@ -58,7 +58,7 @@ class _SubCategoryDesignScreenState extends State<SubCategoryDesignScreen> {
           Expanded(
             child: Obx(
               () => _subCategoryController.isLoadingSubCateDesign.value
-                  ? LoadingWidget()
+                  ? const LoadingWidget()
                   : _subCategoryController
                           .errorStringWhileLoadingSubCate.isEmpty
                       ? _subCategoryController

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:nkm_nose_pins_llp/custom_libs/country_code_lib/country_code_dialog.dart';
 import 'package:nkm_nose_pins_llp/widgets/dialog_widgets/alert_dialog_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/dialog_widgets/alert_dialog_with_result_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/dialog_widgets/information_dialog.dart';
@@ -10,29 +9,6 @@ import 'package:nkm_nose_pins_llp/widgets/dialog_widgets/log_out_dialog.dart';
 import 'package:nkm_nose_pins_llp/widgets/dialog_widgets/progress_dialog_widget.dart';
 
 class AppDialogs {
-  //TODO Country Picker
-  static Future<void> showCountryPickerDialog({
-    required BuildContext context,
-    bool barrierDismissible = true,
-    required Function onCountrySelected,
-  }) {
-    return showDialog(
-      barrierDismissible: barrierDismissible,
-      context: context,
-      barrierColor: Colors.white,
-      useSafeArea: true,
-      builder: (ctx) => Dialog(
-        insetPadding: const EdgeInsets.symmetric(
-          vertical: 50.0,
-          horizontal: 40.0,
-        ),
-        child: CountryCodeDialog(
-          onCountrySelected: onCountrySelected,
-        ),
-      ),
-    );
-  }
-
   //TODO Please Wait Dialog
   static Future<void> showProgressDialog({
     required BuildContext context,

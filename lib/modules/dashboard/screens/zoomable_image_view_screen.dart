@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/constants/route_constants.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 
 class ZoomableImageViewScreen extends StatefulWidget {
   const ZoomableImageViewScreen({Key? key}) : super(key: key);
@@ -44,8 +45,8 @@ class _ZoomableImageViewScreenState extends State<ZoomableImageViewScreen> {
               imageUrl: imageUrl,
               fit: BoxFit.contain,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  const Center(
-                child: CircularProgressIndicator(
+                   Center(
+                child: SpinKitSpinningLines(
                   color: Colors.white,
                 ),
               ),

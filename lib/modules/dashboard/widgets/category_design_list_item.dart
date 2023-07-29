@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/route_constants.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/controllers/cart_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/controllers/category_design_list_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/design_list_model.dart'
-    as designCateItem;
+    as design_cate_item;
 import 'package:nkm_nose_pins_llp/modules/dashboard/widgets/inc_dec_qty_for_listing_widget.dart';
 
 class CategoryDesignListItem extends StatelessWidget {
   final CategoryDesignListController categoryDesignListController;
   final CartController cartController;
-  final designCateItem.Data cateDesignListItem;
+  final design_cate_item.Data cateDesignListItem;
   final String goldKarat;
   final String subCategoryId;
 
@@ -54,30 +55,23 @@ class CategoryDesignListItem extends StatelessWidget {
                             RouteConstants.goldKarat: goldKarat,
                           },
                         ),
-                        //     .then((result) {
-                        //   if (result != null && result) {
-                        //     return;
-                        //   }
-                        //   categoryDesignListController
-                        //       .getCategoryDesignListApiCall(
-                        //     goldCaret: goldKarat,
-                        //     subCategoryId: subCategoryId,
-                        //   );
-                        //   return;
-                        // }),
                         highlightColor: Colors.transparent,
-                        child: CachedNetworkImage(
-                          imageUrl: cateDesignListItem.designImage,
-                          fit: BoxFit.contain,
-                          alignment: Alignment.centerLeft,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                          errorWidget: (context, url, error) => const Padding(
-                            padding: EdgeInsets.only(top: 70),
-                            child: Icon(
-                              Icons.error,
+                        child: Center(
+                          child: CachedNetworkImage(
+                            imageUrl: cateDesignListItem.designImage,
+                            fit: BoxFit.contain,
+                            alignment: Alignment.centerLeft,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                              child: SpinKitSpinningLines(
+                                color: Get.theme.primaryColor,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => const Padding(
+                              padding: EdgeInsets.only(top: 70),
+                              child: Icon(
+                                Icons.error,
+                              ),
                             ),
                           ),
                         ),
@@ -259,12 +253,10 @@ class CategoryDesignListItem extends StatelessWidget {
                         right: 0,
                         child: Obx(
                           () => cateDesignListItem.isLoading.value
-                              ? const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: CircularProgressIndicator(),
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SpinKitSpinningLines(
+                                    color: Get.theme.primaryColor,
                                   ),
                                 )
                               : IconButton(

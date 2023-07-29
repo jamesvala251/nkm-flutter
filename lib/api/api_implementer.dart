@@ -16,12 +16,13 @@ import 'package:nkm_nose_pins_llp/modules/dashboard/models/get_user_profile_mode
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/gold_rates_model.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/logout_model.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/version_info_model.dart';
-import 'package:nkm_nose_pins_llp/modules/profile/models/update_user_profile.dart';
+import 'package:nkm_nose_pins_llp/modules/payment/models/get_order_payment_status_model.dart';
+import 'package:nkm_nose_pins_llp/modules/profile/models/update_user_profile_model.dart';
 import 'package:nkm_nose_pins_llp/modules/login/models/get_otp_model.dart';
 import 'package:nkm_nose_pins_llp/modules/login/models/user_login_model.dart';
 import 'package:nkm_nose_pins_llp/modules/order/models/order_details_model.dart';
 import 'package:nkm_nose_pins_llp/modules/order/models/order_history_model.dart';
-import 'package:nkm_nose_pins_llp/modules/order/models/place_order_model.dart';
+import 'package:nkm_nose_pins_llp/modules/payment/models/place_order_model.dart';
 import 'package:nkm_nose_pins_llp/modules/register/models/register_model.dart';
 
 class ApiImplementer {
@@ -85,8 +86,8 @@ class ApiImplementer {
   }
 
   static Future<RegisterUserModel> registerUserApiCall({
-    required String firstName,
-    required String lastName,
+    required String name,
+    required String shopName,
     required String email,
     required String mobileNo,
     required String pinCode,
@@ -98,8 +99,8 @@ class ApiImplementer {
       final response = await DioClient.getDioClient()!.post(
         '$_authRoutePrefix/registration',
         data: {
-          'first_name': firstName,
-          'last_name': lastName,
+          'name': name,
+          'shop_name': shopName,
           'email': email,
           'mobile_no': mobileNo,
           'pincode': pinCode,
@@ -311,12 +312,33 @@ class ApiImplementer {
   }
 
   //Orders
-  static Future<PlaceOrderModel> placeOrderApiCall() async {
+  static Future<PlaceOrderModel> placeOrderApiCall({
+    required int paymentOption,
+  }) async {
     try {
       final response = await AuthTokenDioClient.getAuthTokenDioClient()!.get(
         '$_nkmRoutePrefix/place-order',
+        queryParameters: {
+          'payment_option': paymentOption,
+        },
       );
       return PlaceOrderModel.fromJson(response.data);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<GetOrderPaymentStatus> getOrderPaymentStatusApiCall({
+    required String orderNo,
+  }) async {
+    try {
+      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.get(
+        '$_nkmRoutePrefix/order-payment-status',
+        queryParameters: {
+          'order_no': orderNo,
+        },
+      );
+      return GetOrderPaymentStatus.fromJson(response.data);
     } catch (error) {
       rethrow;
     }
@@ -366,7 +388,7 @@ class ApiImplementer {
     }
   }
 
-  static Future<UpdateUserProfile> updateUserProfileApiCall({
+  static Future<UpdateUserProfileModel> updateUserProfileApiCall({
     required String name,
     required String panNo,
     required String gstNo,
@@ -383,7 +405,7 @@ class ApiImplementer {
           headers: ApiUrls.applicationJsonHeader,
         ),
       );
-      return UpdateUserProfile.fromJson(response.data);
+      return UpdateUserProfileModel.fromJson(response.data);
     } catch (error) {
       rethrow;
     }

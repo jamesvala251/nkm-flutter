@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:nkm_nose_pins_llp/constants/common_constants.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nkm_nose_pins_llp/constants/preferences_constants.dart';
@@ -12,8 +13,29 @@ class PreferenceObj {
   }
 
   static Future<void> clearPreferenceDataAndLogout() async {
-    // Get.find<DashboardController>().dispose();
-    await _sharedPreferences.clear();
+    try {
+      Get.delete<DashboardController>(
+        tag: CommonConstants.dashboardControllerTag,
+        force: true,
+      );
+
+      Set<String> keysToRemove =
+          _sharedPreferences.getKeys().toSet().difference(
+        {
+          PreferencesConstants.isUserFirstTime, //Key need to keep
+          PreferencesConstants.languageCode, //key need to keep
+          PreferencesConstants.countryCode //key need to keep
+        },
+      );
+
+      await Future.wait(
+        keysToRemove.map(
+          (key) => _sharedPreferences.remove(key),
+        ),
+      );
+    } catch (err) {
+      print('Error while clearing preference data & logout: $err');
+    }
     return;
   }
 
@@ -26,6 +48,16 @@ class PreferenceObj {
     return await _sharedPreferences.setString(
       PreferencesConstants.authToken,
       authToken,
+    );
+  }
+
+  static bool get getIsUserFirstTime =>
+      _sharedPreferences.getBool(PreferencesConstants.isUserFirstTime) ?? true;
+
+  static Future<bool> setIsUserFirstTime() async {
+    return await _sharedPreferences.setBool(
+      PreferencesConstants.isUserFirstTime,
+      false,
     );
   }
 

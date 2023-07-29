@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/route_constants.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/controllers/sub_category_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/design_sub_category_model.dart'
-    as designSubCateItem;
+    as design_sub_cate_item;
 
 class SubCategoryDesignListItemWidget extends StatelessWidget {
   final SubCategoryController subCategoryController;
-  final designSubCateItem.Data subCateItem;
+  final design_sub_cate_item.Data subCateItem;
   final String goldKarat;
 
   const SubCategoryDesignListItemWidget({
@@ -54,10 +55,12 @@ class SubCategoryDesignListItemWidget extends StatelessWidget {
                   imageUrl: subCateItem.subCategoryImage,
                   fit: BoxFit.contain,
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      const Center(
+                       Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 48),
-                      child: CircularProgressIndicator(),
+                      padding: const EdgeInsets.only(top: 48),
+                      child: SpinKitSpinningLines(
+                  color: Get.theme.primaryColor,
+                ),
                     ),
                   ),
                   errorWidget: (context, url, error) => const Padding(

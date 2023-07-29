@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/route_constants.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/controllers/cart_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/widgets/cart_badge_widget.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/controllers/category_design_details_controller.dart';
@@ -114,9 +115,9 @@ class _CategoryDesignDetailsScreenState
         child: FloatingActionButton(
           child: Obx(
             () => cateDesignListItem.isLoading.value
-                ? const CircularProgressIndicator(
-                    color: Colors.white,
-                  )
+                ? const SpinKitSpinningLines(
+                  color: Colors.white,
+                )
                 : const Icon(
                     Icons.share_rounded,
                     color: Colors.white,
@@ -311,8 +312,10 @@ class _CategoryDesignDetailsScreenState
                             .designDetailsModel.value!.designImageFiles[index],
                         fit: BoxFit.contain,
                         progressIndicatorBuilder:
-                            (context, url, downloadProgress) => const Center(
-                          child: CircularProgressIndicator(),
+                            (context, url, downloadProgress) =>  Center(
+                          child: SpinKitSpinningLines(
+                  color: Get.theme.primaryColor,
+                ),
                         ),
                         errorWidget: (context, url, error) => const Icon(
                           Icons.error,
@@ -414,8 +417,10 @@ class _CategoryDesignDetailsScreenState
                         .designDetailsModel.value!.designImage,
                     fit: BoxFit.contain,
                     progressIndicatorBuilder:
-                        (context, url, downloadProgress) => const Center(
-                      child: CircularProgressIndicator(),
+                        (context, url, downloadProgress) =>  Center(
+                      child: SpinKitSpinningLines(
+                  color: Get.theme.primaryColor,
+                ),
                     ),
                     errorWidget: (context, url, error) => const Icon(
                       Icons.error,
@@ -430,9 +435,10 @@ class _CategoryDesignDetailsScreenState
                 onTap: () => Get.toNamed(
                   AppRoutes.videoViewScreen,
                   arguments: {
-                    RouteConstants.title: cateDesignListItem.designName,
-                    RouteConstants.videoUrl: _designDetailsController
-                        .designDetailsModel.value!.designVideoFiles.first,
+                    RouteConstants.productListItemModel: cateDesignListItem,
+                    RouteConstants.designDetailsModel:
+                        _designDetailsController.designDetailsModel.value!,
+                    RouteConstants.goldKarat: goldKarat,
                   },
                 ),
                 highlightColor: Colors.transparent,
@@ -559,11 +565,17 @@ class _CategoryDesignDetailsScreenState
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(
-                                'karat'.tr,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: Get.textTheme.titleSmall!.fontSize,
+                              Obx(
+                                () => Text(
+                                  !_designDetailsController.designDetailsModel
+                                          .value!.isSNKPOrNkm.value
+                                      ? 'karat'.tr
+                                      : 'stamp'.tr,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize:
+                                        Get.textTheme.titleSmall!.fontSize,
+                                  ),
                                 ),
                               ),
                               const SizedBox(

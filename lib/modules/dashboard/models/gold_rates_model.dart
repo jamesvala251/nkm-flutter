@@ -1,10 +1,12 @@
+import 'package:get/get_rx/get_rx.dart';
+
 class GoldRatesModel {
-  late Data? _data;
+  late Data _data;
   late String _message;
   late bool _success;
   late int _statusCode;
 
-  Data? get data => _data;
+  Data get data => _data;
 
   String get message => _message;
 
@@ -13,43 +15,93 @@ class GoldRatesModel {
   int get statusCode => _statusCode;
 
   GoldRatesModel.fromJson(Map<String, dynamic> json) {
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    _message = json['message'] ?? 'msg key null in gold rates api';
+    _data = Data.fromJson(json['data']);
+    _message = json['message'] ?? 'msg key null on gold rate api!';
     _success = json['success'] ?? false;
     _statusCode = json['status_code'] ?? -1;
   }
 }
 
 class Data {
+  late List<GoldCategory> _goldCategory;
+  late List<GoldRate> _goldRate;
 
-  late String _s14k;
-  late String _s18k;
-  late String _s20k;
-  late String _s22k;
-  late String _s24k;
-  //for animation
-  late String anim14k;
-  late String anim18k;
-  late String anim24k;
+  List<GoldCategory> get goldCategory => _goldCategory;
 
-  String get s14k => _s14k;
-
-  String get s18k => _s18k;
-
-  String get s20k => _s20k;
-
-  String get s22k => _s22k;
-
-  String get s24k => _s24k;
+  List<GoldRate> get goldRate => _goldRate;
 
   Data.fromJson(Map<String, dynamic> json) {
-    _s14k = json['14k'] ?? '0';
-    anim14k = _s14k.replaceAll(',', '');
-    _s18k = json['18k'] ?? '0';
-    anim18k = _s18k.replaceAll(',', '');
-    _s20k = json['20k'] ?? '0';
-    _s22k = json['22k'] ?? '0';
-    _s24k = json['24k'] ?? '0';
-    anim24k = _s24k.replaceAll(',', '');
+    _goldCategory = <GoldCategory>[];
+    if (json['gold_category'] != null) {
+      json['gold_category'].forEach((v) {
+        GoldCategory goldCategory = GoldCategory.fromJson(v);
+        if (goldCategory.status == 1) {
+          _goldCategory.add(goldCategory);
+        }
+      });
+      _goldCategory.sort(
+        (a, b) => a.sortOrder.compareTo(b.sortOrder),
+      );
+    }
+
+    _goldRate = <GoldRate>[];
+    if (json['gold_rate'] != null) {
+      json['gold_rate'].forEach((v) {
+        GoldRate goldRate = GoldRate.fromJson(v);
+        if (goldRate.status == 1) {
+          _goldRate.add(goldRate);
+        }
+      });
+      _goldRate.sort(
+        (a, b) => a.sortOrder.compareTo(b.sortOrder),
+      );
+    }
+  }
+}
+
+class GoldCategory {
+  late String _label;
+  late int _status;
+  late int _value;
+  late int _sortOrder;
+  final RxBool isSelected = false.obs;
+
+  String get label => _label;
+
+  int get status => _status;
+
+  int get value => _value;
+
+  int get sortOrder => _sortOrder;
+
+  GoldCategory.fromJson(Map<String, dynamic> json) {
+    _label = json['label'] ?? '';
+    _status = json['status'] ?? -1;
+    _value = json['value'] ?? -1;
+    _sortOrder = json['sort_order'] ?? -1;
+  }
+}
+
+class GoldRate {
+  late String _label;
+  late int _status;
+  late String _rate;
+  late int _sortOrder;
+  late String animK;
+
+  String get label => _label;
+
+  int get status => _status;
+
+  String get rate => _rate;
+
+  int get sortOrder => _sortOrder;
+
+  GoldRate.fromJson(Map<String, dynamic> json) {
+    _label = json['label'] ?? '';
+    _status = json['status'] ?? -1;
+    _rate = json['rate'] ?? '0';
+    animK = _rate.replaceAll(',', '');
+    _sortOrder = json['sort_order'] ?? -1;
   }
 }

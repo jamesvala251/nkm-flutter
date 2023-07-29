@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/api/api_implementer.dart';
+import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/modules/register/models/register_model.dart';
 import 'package:nkm_nose_pins_llp/utils/helpers/helper.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/app_dialogs.dart';
@@ -10,18 +11,19 @@ import 'package:nkm_nose_pins_llp/utils/ui/ui_utils.dart';
 enum RoleEnum { dealer, shopKeeper, semiDealer, none }
 
 class RegisterController extends GetxController {
-  late String dialCode = '+91'; //+91 is default dialcode
+  late String dialCode = '+91 '; //+91 is default dialcode
   late String countryName = 'India';
   final Rx<RoleEnum> selectedRole = Rx<RoleEnum>(RoleEnum.dealer);
 
   void registerApiCall({
     required BuildContext context,
-    required String firstName,
-    required String lastName,
+    required String name,
+    required String shopName,
     required String mobileNo,
     required String emailAddress,
     required String panNo,
     required String gstNo,
+    required bool canPop,
   }) async {
     try {
       AppDialogs.showProgressDialog(
@@ -29,8 +31,8 @@ class RegisterController extends GetxController {
       );
       RegisterUserModel registerUserModel =
           await ApiImplementer.registerUserApiCall(
-        firstName: firstName,
-        lastName: lastName,
+        name: name,
+        shopName: shopName,
         mobileNo: mobileNo,
         email: emailAddress,
         panNo: panNo,
@@ -45,7 +47,11 @@ class RegisterController extends GetxController {
       Get.back();
       if (registerUserModel.success) {
         UiUtils.successSnackBar(message: registerUserModel.message);
-        Get.back(result: mobileNo);
+        if (canPop) {
+          Get.back(result: mobileNo);
+          return;
+        }
+        Get.offAllNamed(AppRoutes.loginScreen);
         return;
       }
       UiUtils.errorSnackBar(message: registerUserModel.message);

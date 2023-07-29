@@ -22,6 +22,8 @@ class Helper {
         return dioError.response!.data['message'];
       } else if (dioError.response!.statusCode == 422) {
         return dioError.response!.data['message'];
+      } else if (dioError.response!.statusCode == 429) {
+        return dioError.response!.statusMessage ?? 'something_went_wrong'.tr;
       } else if (dioError.response!.statusCode == 404) {
         return '404_err_msg'.tr;
       } else if (dioError.response!.statusCode == 500) {

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/marquee_lib/marquee.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/controllers/cart_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/widgets/cart_badge_widget.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/widgets/cart_list_item_widget.dart';
+import 'package:nkm_nose_pins_llp/modules/payment/widgets/payment_option_selection_widget.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/widgets/gold_rates_widget.dart';
-import 'package:nkm_nose_pins_llp/modules/order/controllers/order_controller.dart';
-import 'package:nkm_nose_pins_llp/utils/ui/app_dialogs.dart';
 import 'package:nkm_nose_pins_llp/widgets/loading_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/no_data_found_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/something_went_wrong_widget.dart';
@@ -50,6 +49,20 @@ class _CartScreenState extends State<CartScreen> {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          SizedBox(
+                            height: 24.0,
+                            child: Marquee(
+                              text:
+                                  "your_cart_item_will_be_removed_after_six_hours"
+                                      .tr,
+                              style: TextStyle(
+                                  color: Get.theme.primaryColor,
+                                  fontSize: Get.textTheme.titleLarge!.fontSize),
+                            ),
+                          ),
                           GoldRatesWidget(),
                           Expanded(
                             child: ListView.builder(
@@ -120,32 +133,8 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ),
                                 child: InkWell(
-                                  onTap: () {
-                                    AppDialogs.showAlertDialog(
-                                      context: context,
-                                      title: 'Place Order?',
-                                      description:
-                                          'Are you sure want to place order?',
-                                      firstButtonName: 'No',
-                                      secondButtonName: 'Yes',
-                                      onFirstButtonClicked: () => Get.back(),
-                                      onSecondButtonClicked: () {
-                                        Get.back();
-                                        Get.put(OrderController());
-                                        Get.toNamed(
-                                          AppRoutes.orderResponseScreen,
-                                        )!
-                                            .then((result) {
-                                          Get.offNamedUntil(
-                                            AppRoutes.dashboardScreen,
-                                            (route) => false,
-                                          );
-                                          return;
-                                        });
-                                        return;
-                                      },
-                                    );
-                                  },
+                                  onTap: () =>
+                                      _openBottomSheetForChoosePaymentOptions(),
                                   highlightColor: Colors.transparent,
                                   borderRadius: BorderRadius.circular(
                                     30,
@@ -157,14 +146,6 @@ class _CartScreenState extends State<CartScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       color: Get.theme.primaryColor,
-                                      // gradient: const LinearGradient(
-                                      //   colors: [
-                                      //     Color(0xFFFFE998),
-                                      //     Color(0xFF57370D)
-                                      //   ],
-                                      //   begin: Alignment.topLeft,
-                                      //   end: Alignment.bottomRight,
-                                      // ),
                                       borderRadius: BorderRadius.circular(
                                         30,
                                       ),
@@ -174,8 +155,9 @@ class _CartScreenState extends State<CartScreen> {
                                         Text(
                                           'place_order'.tr.toUpperCase(),
                                           style: const TextStyle(
-                                              letterSpacing: 1.1,
-                                              color: Colors.white),
+                                            letterSpacing: 1.1,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                         const SizedBox(
                                           width: 8,
@@ -196,6 +178,13 @@ class _CartScreenState extends State<CartScreen> {
                     : const SizedBox()
                 : const SizedBox(),
       ),
+    );
+  }
+
+  void _openBottomSheetForChoosePaymentOptions() {
+    Get.bottomSheet(
+      PaymentOptionSelectionWidget(),
+      isScrollControlled: true,
     );
   }
 }

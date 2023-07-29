@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/api/api_implementer.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/images_path.dart';
-import 'package:nkm_nose_pins_llp/custom_libs/country_code_lib/country_code_model.dart';
 import 'package:nkm_nose_pins_llp/modules/login/controllers/login_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/login/models/get_otp_model.dart';
 import 'package:nkm_nose_pins_llp/modules/login/screens/login_screen.dart';
@@ -96,10 +95,8 @@ class _MobileNoWidgetState extends State<MobileNoWidget> {
                     CommonStyle.getTextFormFiledDecorationForMobileNoFiled(
                   label: 'mobile_no'.tr,
                   hintText: 'enter_mobile_no'.tr,
-                  onCountrySelected: _onCountrySelected,
                   context: context,
                   dialCode: widget.loginController.dialCode,
-                  needToShowFlag: false,
                 ),
               ),
               SizedBox(
@@ -134,45 +131,82 @@ class _MobileNoWidgetState extends State<MobileNoWidget> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: InkWell(
-                    onTap: () => Get.toNamed(AppRoutes.registerScreen)!
-                        .then((mobileNoArg) {
-                      if (mobileNoArg != null &&
-                          mobileNoArg.toString().isNotEmpty) {
-                        _mobileNo.text = mobileNoArg;
-                        _getOtpApiCall(mobileNo: mobileNoArg);
-                      }
-                    }),
-                    splashColor: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 4.0,
-                        horizontal: 4.0,
-                      ),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: 'do_not_have_account'.tr,
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: Get.textTheme.titleMedium!.fontSize,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'sign_up'.tr,
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: Get.textTheme.titleMedium!.fontSize,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 1,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            Colors.white,
+                            Colors.white,
+                            Colors.white,
+                            Colors.white,
+                            Colors.transparent
                           ],
+                          stops: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
                         ),
                       ),
                     ),
+                  ),
+                  Text(
+                    "or".tr.toUpperCase(),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 1,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            Colors.white,
+                            Colors.white,
+                            Colors.white,
+                            Colors.white,
+                            Colors.transparent
+                          ],
+                          stops: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              ElevatedButton(
+                onPressed: () =>
+                    Get.toNamed(AppRoutes.registerScreen)!.then((mobileNoArg) {
+                  if (mobileNoArg != null &&
+                      mobileNoArg.toString().isNotEmpty) {
+                    _mobileNo.text = mobileNoArg;
+                    _getOtpApiCall(mobileNo: mobileNoArg);
+                  }
+                }),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 14.0,
+                  ),
+                  elevation: 4.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: const BorderSide(color: Colors.white)),
+                ),
+                child: Text(
+                  'sign_up'.tr.toUpperCase(),
+                  style: const TextStyle(
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -181,11 +215,6 @@ class _MobileNoWidgetState extends State<MobileNoWidget> {
         ),
       ),
     );
-  }
-
-  void _onCountrySelected(CountryCodeModel countryCodeModel) {
-    widget.loginController.dialCode = countryCodeModel.dialCode;
-    widget.loginController.countryName = countryCodeModel.name;
   }
 
   void _getOtpApiCall({required String mobileNo}) async {

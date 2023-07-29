@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({
@@ -12,7 +13,10 @@ class LoadingWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(),
+          SpinKitSpinningLines(
+            color: Get.theme.primaryColor,
+            size: 44,
+          ),
           const SizedBox(
             height: 12,
           ),

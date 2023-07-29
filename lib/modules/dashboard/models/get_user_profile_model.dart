@@ -65,12 +65,12 @@ class Data {
         profileCircleName = _name[0];
       }
     }
-    _email = json['email'] ?? '-';
-    _userType = json['user_type'] ?? '-';
-    _mobileNo = json['mobile_no'] ?? '-';
-    _pincode = json['pincode'] ?? '-';
-    _panNo = json['pan_no'] ?? '-';
-    _gstNo = json['gst_no'] ?? '-';
-    _address = json['address'] ?? '-';
+    _email = json['email'] ?? '';
+    _userType = json['user_type'] ?? '';
+    _mobileNo = json['mobile_no'] ?? '';
+    _pincode = json['pincode'] ?? '';
+    _panNo = json['pan_no'] ?? '';
+    _gstNo = json['gst_no'] ?? '';
+    _address = json['address'] ?? '';
   }
 }

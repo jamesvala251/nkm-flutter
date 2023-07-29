@@ -75,7 +75,7 @@ class Data {
     }
     _designImage = json['design_image'] ?? '';
     _caret = json['caret'] ?? '';
-    _caret = _caret.isNotEmpty ? _caret.toLowerCase().replaceFirst('k', '') : _caret;
+    // _caret = _caret.isNotEmpty ? _caret.toLowerCase().replaceFirst('k', '') : _caret;
     _goldRate = json['gold_rate'] ?? '';
     _quantity = json['quantity'] ?? 0;
     _makingCharge = json['making_charge'] ?? '';
