@@ -58,11 +58,11 @@ android {
         dev {
             dimension "default"
             applicationIdSuffix ".dev"
-            resValue "string","app_name","NKM LLP-Dev"
+//            resValue "string","app_name","NKM LLP-Dev"
         }
         prod {
             dimension "default"
-            resValue "string", "app_name", "NKM Nose Pins LLP"
+//            resValue "string", "app_name", "NKM Nose Pins LLP"
         }
     }
 

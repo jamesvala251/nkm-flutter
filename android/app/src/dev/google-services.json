@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "561690903886",
+    "project_id": "nkm-llp-dev",
+    "storage_bucket": "nkm-llp-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561690903886:android:3f879556007bb55c92ca1f",
+        "android_client_info": {
+          "package_name": "com.org.nkm_nose_pins_llp.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561690903886-91adf56sp4it6uh0cd3jub4e2qgh5re7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE-xH42ol2qjx3nfpaFxylmhC7ej2P9LQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561690903886-91adf56sp4it6uh0cd3jub4e2qgh5re7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

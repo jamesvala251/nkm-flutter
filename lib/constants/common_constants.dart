@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -81,4 +82,42 @@ class CommonConstants {
     3: ['Approved', Colors.green],
     4: ['Rejected', Colors.red],
   };
+
+  static const FirebaseOptions firebaseOptionsAndroidProd = FirebaseOptions(
+    apiKey: 'AIzaSyCZOiCsxdfQxuGfBw-_yku4QOI1bPP2lCU',
+    appId: '1:534290823844:android:ff5197989aa8d73fe0c431',
+    messagingSenderId: '534290823844',
+    projectId: 'nkm-nose-pins-llp-80f0b',
+    storageBucket: 'nkm-nose-pins-llp-80f0b.appspot.com',
+  );
+
+  static const FirebaseOptions firebaseOptionsIosProd = FirebaseOptions(
+    apiKey: 'AIzaSyBGNdr0ZZGssYoLzyqBWrLjU0ALUodBH3A',
+    appId: '1:534290823844:ios:27dfbff798e628b8e0c431',
+    messagingSenderId: '534290823844',
+    projectId: 'nkm-nose-pins-llp-80f0b',
+    storageBucket: 'nkm-nose-pins-llp-80f0b.appspot.com',
+    androidClientId: '534290823844-76uhk2hqn5jj38bpld8qhuhjqponvntf.apps.googleusercontent.com',
+    iosClientId: '534290823844-aqa1il7l223uptv4nb4sn0ahljh4od73.apps.googleusercontent.com',
+    iosBundleId: 'com.org.nkmNosePinsLlp',
+  );
+
+  static const FirebaseOptions firebaseOptionsAndroidDev = FirebaseOptions(
+    apiKey: 'AIzaSyDE-xH42ol2qjx3nfpaFxylmhC7ej2P9LQ',
+    appId: '1:561690903886:android:3f879556007bb55c92ca1f',
+    messagingSenderId: '561690903886',
+    projectId: 'nkm-llp-dev',
+    storageBucket: 'nkm-llp-dev.appspot.com',
+  );
+
+  static const FirebaseOptions firebaseOptionsIosDev = FirebaseOptions(
+    apiKey: 'AIzaSyAnlt5NBuQkmSnsFwVHAm7oWI5DnnkpmMc',
+    appId: '1:561690903886:ios:8bf8b578790bc54592ca1f',
+    messagingSenderId: '561690903886',
+    projectId: 'nkm-llp-dev',
+    storageBucket: 'nkm-llp-dev.appspot.com',
+    iosClientId:
+        '561690903886-lfg4kgfum4gg9f0jltti8bk8i9onp8m7.apps.googleusercontent.com',
+    iosBundleId: 'com.org.nkmnosepinsllp.dev',
+  );
 }

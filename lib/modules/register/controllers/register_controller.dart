@@ -8,12 +8,16 @@ import 'package:nkm_nose_pins_llp/utils/helpers/helper.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/app_dialogs.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/ui_utils.dart';
 
-enum RoleEnum { dealer, shopKeeper, semiDealer, none }
+enum RoleEnum {
+  shopKeeper,
+  semiDealer,
+  none
+} //dealer -dealer option removed as per dicussion with jasvant bhai on date 18-08-2023
 
 class RegisterController extends GetxController {
   late String dialCode = '+91 '; //+91 is default dialcode
   late String countryName = 'India';
-  final Rx<RoleEnum> selectedRole = Rx<RoleEnum>(RoleEnum.dealer);
+  final Rx<RoleEnum> selectedRole = Rx<RoleEnum>(RoleEnum.shopKeeper);
 
   void registerApiCall({
     required BuildContext context,
@@ -38,11 +42,11 @@ class RegisterController extends GetxController {
         panNo: panNo,
         gstNo: gstNo,
         pinCode: '',
-        role: selectedRole.value == RoleEnum.dealer
-            ? 'dealer'
-            : selectedRole.value == RoleEnum.shopKeeper
-                ? 'shopkeeper'
-                : 'semi dealer',
+        role: selectedRole.value ==
+                RoleEnum
+                    .shopKeeper //selectedRole.value == RoleEnum.dealer ? 'dealer' :
+            ? 'shopkeeper'
+            : 'semi dealer',
       );
       Get.back();
       if (registerUserModel.success) {

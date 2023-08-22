@@ -220,44 +220,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: () => _registerController.selectedRole.value =
-                        RoleEnum.dealer,
-                    splashColor: Colors.transparent,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Obx(
-                            () => Radio(
-                              value: RoleEnum.dealer,
-                              groupValue:
-                                  _registerController.selectedRole.value,
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.white70),
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                              onChanged: (selectedRoleValue) =>
-                                  _registerController.selectedRole.value =
-                                      selectedRoleValue!,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          'dealer'.tr,
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: Get.textTheme.titleMedium!.fontSize,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: () => _registerController.selectedRole.value =
+                  //       RoleEnum.dealer,
+                  //   splashColor: Colors.transparent,
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 24,
+                  //         width: 24,
+                  //         child: Obx(
+                  //           () => Radio(
+                  //             value: RoleEnum.dealer,
+                  //             groupValue:
+                  //                 _registerController.selectedRole.value,
+                  //             fillColor: MaterialStateColor.resolveWith(
+                  //                 (states) => Colors.white70),
+                  //             materialTapTargetSize:
+                  //                 MaterialTapTargetSize.shrinkWrap,
+                  //             onChanged: (selectedRoleValue) =>
+                  //                 _registerController.selectedRole.value =
+                  //                     selectedRoleValue!,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       const SizedBox(
+                  //         width: 8,
+                  //       ),
+                  //       Text(
+                  //         'dealer'.tr,
+                  //         style: TextStyle(
+                  //           color: Colors.white70,
+                  //           fontSize: Get.textTheme.titleMedium!.fontSize,
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   InkWell(
                     onTap: () => _registerController.selectedRole.value =
                         RoleEnum.shopKeeper,

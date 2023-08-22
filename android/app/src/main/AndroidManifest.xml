@@ -17,7 +17,9 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:resizeableActivity="false"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:autoVerify="true">
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -44,6 +46,11 @@
                 <data
                     android:host="nkmnosepinllp.page.link"
                     android:scheme="https" />
+
+                <data
+                    android:host="nkmnosepinllp.page.link"
+                    android:scheme="http" />
+
             </intent-filter>
 
         </activity>

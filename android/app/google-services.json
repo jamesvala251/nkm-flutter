@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "534290823844-mk3p09m1160j76e60tabtedf05g6gs7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.org.nkm_nose_pins_llp",
+            "certificate_hash": "11336bce3f4e1f8679fbfb6b6c482f2c1d8ff836"
+          }
+        },
+        {
           "client_id": "534290823844-5e60nic30cp3vpoibkldefvb55dsd2u3.apps.googleusercontent.com",
           "client_type": 3
         }
