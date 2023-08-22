@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/common_constants.dart';
 import 'package:nkm_nose_pins_llp/constants/route_constants.dart';
-import 'package:nkm_nose_pins_llp/modules/dashboard/models/design_list_model.dart'
-    as design_list_item_model;
 
 class FirebaseDeepLinkService {
   static Future<void> initDynamicLinks() async {
@@ -44,17 +42,20 @@ class FirebaseDeepLinkService {
               .trim()
               .toLowerCase() ==
           CommonConstants.screenNameDynamicLinkKey.trim().toLowerCase()) {
-        print('GOING TO PRODUCT DETAILS SCREEN!!!!');
-        design_list_item_model.Data designListItemModel =
-            design_list_item_model.Data.fromJsonForDynamicLink(receivedData);
+        print('GOING TO ARTICLE LIST SCREEN!!!!');
+
+        int designId =
+            int.parse(receivedData[CommonConstants.designIdDynamicLinkKey]);
+        String designName =
+            receivedData[CommonConstants.designNameDynamicLinkKey];
         String goldKarat =
             receivedData[CommonConstants.goldKaratDynamicLinkKey];
         Get.toNamed(
-          AppRoutes.categoryDesignDetailsScreen,
+          AppRoutes.designArticleScreen,
           arguments: {
-            ...designListItemModel.toJson(),
-            RouteConstants.designDetailsModel: designListItemModel,
-            RouteConstants.goldKarat: goldKarat.toString(),
+            RouteConstants.designId: designId,
+            RouteConstants.designName: designName,
+            RouteConstants.goldKarat: goldKarat,
           },
         );
         return;
@@ -67,15 +68,16 @@ class FirebaseDeepLinkService {
     }
   }
 
-  static Future<String>
-      createFirebaseShortDynamicLinkForProductDesignDetailsScreen({
-    required design_list_item_model.Data designListItemModel,
+  static Future<String> createFirebaseShortDynamicLinkForArticleListScreen({
+    required String designId,
+    required String designName,
     required String goldKarat,
   }) async {
     try {
       final Uri deepLink = Uri.parse("https://nkmnosepinsllp.com/").replace(
         queryParameters: {
-          ...designListItemModel.toJson(),
+          CommonConstants.designIdDynamicLinkKey: designId,
+          CommonConstants.designNameDynamicLinkKey: designName,
           CommonConstants.goldKaratDynamicLinkKey: goldKarat,
           CommonConstants.screenNameDynamicLinkKey:
               CommonConstants.screenNameDynamicLinkKey,

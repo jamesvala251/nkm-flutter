@@ -6,14 +6,14 @@ import 'package:nkm_nose_pins_llp/modules/order/models/order_details_model.dart'
     as order_details_model_as;
 
 class OrderHistoryListItemWidget extends StatelessWidget {
-  final order_details_model_as.Data orderDetailListItemModel;
+  final order_details_model_as.ArticleDetail articleDetailsModel;
   final bool isFirstItem;
   final RxBool isExpanded = false.obs;
 
   OrderHistoryListItemWidget({
     Key? key,
     required this.isFirstItem,
-    required this.orderDetailListItemModel,
+    required this.articleDetailsModel,
   }) : super(key: key) {
     isExpanded.value = isFirstItem;
   }
@@ -67,18 +67,17 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(60),
                           child: CachedNetworkImage(
-                            imageUrl: orderDetailListItemModel.designImage,
+                            imageUrl: articleDetailsModel.designImage,
                             fit: BoxFit.contain,
                             alignment: Alignment.center,
                             progressIndicatorBuilder:
-                                (context, url, downloadProgress) =>
-                                     Center(
+                                (context, url, downloadProgress) => Center(
                               child: SpinKitSpinningLines(
-                  color: Get.theme.primaryColor,
-                ),
+                                color: Get.theme.primaryColor,
+                              ),
                             ),
                             errorWidget: (context, url, error) => const Icon(
-                              Icons.error,
+                              Icons.error_rounded,
                             ),
                           ),
                         ),
@@ -93,7 +92,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            orderDetailListItemModel.designName,
+                            articleDetailsModel.designName,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleMedium!.fontSize,
                               color: Get.theme.primaryColor,
@@ -101,7 +100,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            orderDetailListItemModel.caret,
+                            articleDetailsModel.caret,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleSmall!.fontSize,
                               color: Get.theme.primaryColor,
@@ -142,6 +141,31 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
+                            'article_number'.tr,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: Get.textTheme.titleSmall!.fontSize,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          Text(
+                            articleDetailsModel.articalNumber,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: Get.textTheme.titleMedium!.fontSize,
+                              fontWeight: FontWeight.w600,
+                              color: Get.theme.primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
                             'gold_purity_diff'.tr,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -152,7 +176,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             height: 1,
                           ),
                           Text(
-                            orderDetailListItemModel.caret,
+                            articleDetailsModel.caret,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleMedium!.fontSize,
@@ -177,32 +201,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             height: 1,
                           ),
                           Text(
-                            '₹${orderDetailListItemModel.goldRate}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: Get.textTheme.titleMedium!.fontSize,
-                              fontWeight: FontWeight.w600,
-                              color: Get.theme.primaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'quantity'.tr,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: Get.textTheme.titleSmall!.fontSize,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 1,
-                          ),
-                          Text(
-                            '${orderDetailListItemModel.quantity}',
+                            '₹${articleDetailsModel.goldRate}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleMedium!.fontSize,
@@ -242,7 +241,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             height: 1,
                           ),
                           Text(
-                            '${orderDetailListItemModel.totalWeight}',
+                            '${articleDetailsModel.weight}mg',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleMedium!.fontSize,
@@ -267,7 +266,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             height: 1,
                           ),
                           Text(
-                            '₹${orderDetailListItemModel.makingCharge}',
+                            '₹${articleDetailsModel.makingCharge}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleMedium!.fontSize,
@@ -292,7 +291,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
                             height: 1,
                           ),
                           Text(
-                            '₹${orderDetailListItemModel.totalPrice}',
+                            '₹${articleDetailsModel.totalPrice}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: Get.textTheme.titleMedium!.fontSize,

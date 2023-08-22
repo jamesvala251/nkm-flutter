@@ -8,7 +8,6 @@ import 'package:nkm_nose_pins_llp/modules/payment/widgets/payment_option_selecti
 import 'package:nkm_nose_pins_llp/modules/dashboard/widgets/gold_rates_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/loading_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/no_data_found_widget.dart';
-import 'package:nkm_nose_pins_llp/widgets/something_went_wrong_widget.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -44,60 +43,54 @@ class _CartScreenState extends State<CartScreen> {
       body: Obx(
         () => _cartController.isLoadingCart.value
             ? const LoadingWidget()
-            : _cartController.errorStringWhileLoadingCart.value.isEmpty
-                ? _cartController.getUserCartItemsModel.value!.data.isNotEmpty
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          SizedBox(
-                            height: 24.0,
-                            child: Marquee(
-                              text:
-                                  "your_cart_item_will_be_removed_after_six_hours"
-                                      .tr,
-                              style: TextStyle(
-                                  color: Get.theme.primaryColor,
-                                  fontSize: Get.textTheme.titleLarge!.fontSize),
-                            ),
-                          ),
-                          GoldRatesWidget(),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: const EdgeInsets.only(bottom: 80),
-                              itemCount: _cartController
-                                  .getUserCartItemsModel.value!.data.length,
-                              itemBuilder: (ctx, index) => CartListItemWidget(
-                                cartController: _cartController,
-                                cartItemModel: _cartController
-                                    .getUserCartItemsModel.value!.data[index],
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : NoDataFoundWidget(
-                        infoTxt: 'your_cart_is_empty'.tr,
-                        retryOn: () => _cartController.getUserCartApiCall(),
-                        icon: Icon(
-                          Icons.shopping_basket_rounded,
-                          size: 150,
-                          color: Get.theme.primaryColor,
+            : _cartController.errorStringWhileLoadingCart.value.isEmpty &&
+                    _cartController.getUserCartItemsModel.value?.data != null
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      SizedBox(
+                        height: 24.0,
+                        child: Marquee(
+                          text: "your_cart_item_will_be_removed_after_six_hours"
+                              .tr,
+                          style: TextStyle(
+                              color: Get.theme.primaryColor,
+                              fontSize: Get.textTheme.titleLarge!.fontSize),
                         ),
-                      )
-                : SomethingWentWrongWidget(
-                    errorTxt: _cartController.errorStringWhileLoadingCart.value,
-                    retryOnSomethingWentWrong: () =>
-                        _cartController.getUserCartApiCall(),
+                      ),
+                      GoldRatesWidget(),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.only(bottom: 80),
+                          itemCount: _cartController.getUserCartItemsModel
+                              .value!.data!.cartItemData.length,
+                          itemBuilder: (ctx, index) => CartListItemWidget(
+                            cartController: _cartController,
+                            cartItemModel: _cartController.getUserCartItemsModel
+                                .value!.data!.cartItemData[index],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : NoDataFoundWidget(
+                    infoTxt: 'your_cart_is_empty'.tr,
+                    retryOn: () => _cartController.getUserCartApiCall(),
+                    icon: Icon(
+                      Icons.shopping_basket_rounded,
+                      size: 150,
+                      color: Get.theme.primaryColor,
+                    ),
                   ),
       ),
       bottomSheet: Obx(
         () => _cartController.isLoadingCart.value
             ? const SizedBox()
             : _cartController.errorStringWhileLoadingCart.value.isEmpty
-                ? _cartController.getUserCartItemsModel.value!.data.isNotEmpty
+                ? _cartController.getUserCartItemsModel.value?.data != null
                     ? Card(
                         margin: EdgeInsets.zero,
                         color: Colors.grey.shade100,
@@ -114,7 +107,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                               Text(
-                                '₹${_cartController.getUserCartItemsModel.value!.orderTotalAmount}',
+                                '₹${_cartController.getUserCartItemsModel.value!.data!.total}',
                                 style: TextStyle(
                                   fontSize: Get.textTheme.titleLarge!.fontSize,
                                   color: Get.theme.primaryColor,

@@ -14,5 +14,4 @@ class LogoutModel {
     _success = json['success'] ?? false;
     _statusCode = json['status_code'] ?? -1;
   }
-
 }

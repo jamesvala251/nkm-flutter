@@ -45,14 +45,14 @@ class _ZoomableImageViewScreenState extends State<ZoomableImageViewScreen> {
               imageUrl: imageUrl,
               fit: BoxFit.contain,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
-                   Center(
+                  const Center(
                 child: SpinKitSpinningLines(
                   color: Colors.white,
                 ),
               ),
               errorWidget: (context, url, error) => const Padding(
                 padding: EdgeInsets.only(top: 70),
-                child: Icon(Icons.error, size: 50, color: Colors.white),
+                child: Icon(Icons.error_rounded, size: 50, color: Colors.white),
               ),
             ),
           ),

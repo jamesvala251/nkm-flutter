@@ -4,6 +4,7 @@ import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 import 'package:nkm_nose_pins_llp/modules/order/controllers/order_history_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/order/widgets/order_history_list_item_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/loading_widget.dart';
+import 'package:nkm_nose_pins_llp/widgets/no_data_found_widget.dart';
 import 'package:nkm_nose_pins_llp/widgets/something_went_wrong_widget.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
@@ -53,12 +54,19 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         () => _orderHistoryController.isLoadingOrderHistory.value
             ? const LoadingWidget()
             : _orderHistoryController.errorStringOrderHistory.value.isEmpty
-                ? _getOrderHistoryList
+                ? _orderHistoryController.orderList.isNotEmpty
+                    ? _getOrderHistoryList
+                    : NoDataFoundWidget(
+                        retryOn: () {
+                          _orderHistoryController.getOrderHistoryApiCall();
+                        },
+                      )
                 : SomethingWentWrongWidget(
                     errorTxt:
                         _orderHistoryController.errorStringOrderHistory.value,
-                    retryOnSomethingWentWrong: () =>
-                        _orderHistoryController.errorStringOrderHistory.value,
+                    retryOnSomethingWentWrong: () {
+                      _orderHistoryController.getOrderHistoryApiCall();
+                    },
                   ),
       ),
     );
@@ -125,10 +133,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   SpinKitSpinningLines(
-                  color: Get.theme.primaryColor,
-                     size: 16.0,
-                ),
+                  SpinKitSpinningLines(
+                    color: Get.theme.primaryColor,
+                    size: 16.0,
+                  ),
                   const SizedBox(
                     width: 8.0,
                   ),
@@ -155,7 +163,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          Icons.refresh,
+                          Icons.refresh_rounded,
                           color: Get.theme.primaryColor,
                         ),
                         const SizedBox(

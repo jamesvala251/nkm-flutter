@@ -12,7 +12,7 @@ class OrderHistoryModel {
   late String _message;
   late bool _success;
   late int _statusCode;
-  late int _totalCount;
+  // late int _totalCount;
   late int _perPage;
   late int _currentPage;
 
@@ -24,7 +24,7 @@ class OrderHistoryModel {
 
   int get statusCode => _statusCode;
 
-  int get totalCount => _totalCount;
+  // int get totalCount => _totalCount;
 
   int get perPage => _perPage;
 
@@ -40,7 +40,7 @@ class OrderHistoryModel {
     _message = json['message'] ?? 'msg key null on order history api';
     _success = json['success'] ?? false;
     _statusCode = json['status_code'] ?? -1;
-    _totalCount = json['total_count'] ?? 0;
+    // _totalCount = json['total_count'] ?? 0;
     _perPage = json['per_page'] ?? 0;
     _currentPage = json['current_page'] ?? 0;
   }
@@ -53,7 +53,9 @@ class Data {
   late int _totalQty;
   late String _totalPrice;
   late String _status;
-  late String _invoice;
+  // late String _invoice;
+  late String _customerInvoice;
+
   late Color statusColor = Get.theme.primaryColor;
 
   //for download
@@ -75,7 +77,9 @@ class Data {
 
   String get status => _status;
 
-  String get invoice => _invoice;
+  // String get invoice => _invoice;
+
+  String get customerInvoice => _customerInvoice;
 
   Data.fromJson(Map<String, dynamic> json) {
     _orderId = json['order_id'];
@@ -84,7 +88,8 @@ class Data {
     _totalQty = json['total_qty'] ?? 0;
     _totalPrice = json['total_price'] ?? '';
     _status = json['status'] ?? '';
-    _invoice = json['invoice'] ?? '';
+    // _invoice = json['invoice'] ?? '';
+    _customerInvoice = json['customer_invoice'] ?? '';
     statusColor = _status.isNotEmpty
         ? _status.toLowerCase() == 'approved'
             ? Colors.green
@@ -121,7 +126,7 @@ class Data {
       // final String invoicePath = "$invoiceStorageDirectoryPath/$invoiceName";
 
       await Dio().downloadUri(
-        Uri.parse(_invoice),
+        Uri.parse(_customerInvoice),
         destinationFile.path,
         onReceiveProgress: (receivedBytes, totalBytes) {
           if (totalBytes != -1) {

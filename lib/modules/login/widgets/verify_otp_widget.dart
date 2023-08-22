@@ -272,7 +272,7 @@ class _VerifyOtpWidgetState extends State<VerifyOtpWidget> {
     return TextButton.icon(
       onPressed: null,
       icon: const Icon(
-        Icons.timer,
+        Icons.timer_rounded,
         size: 34.0,
         color: Colors.white70,
       ),

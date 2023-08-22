@@ -218,7 +218,7 @@ class OrderHistoryListItemWidget extends StatelessWidget {
               ],
             ),
           ),
-          orderHistoryListItemModel.invoice.isNotEmpty
+          orderHistoryListItemModel.customerInvoice.isNotEmpty
               ? OrderInvoiceDownloadWidget(
                   orderHistoryItemModel: orderHistoryListItemModel,
                   orderHistoryController: orderHistoryController,

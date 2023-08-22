@@ -40,7 +40,9 @@ class CategoryDesignListItemWidget extends StatelessWidget {
               RouteConstants.categoryId:
                   designCategoryItemModel.categoryId.toString(),
             },
-          );
+          )?.then((value) {
+            dashboardController.getGoldRatesApiCall();
+          });
         },
         highlightColor: Colors.transparent,
         borderRadius: BorderRadius.circular(12.0),
@@ -90,14 +92,14 @@ class CategoryDesignListItemWidget extends StatelessWidget {
                     imageUrl: designCategoryItemModel.categoryImage,
                     fit: BoxFit.fill,
                     progressIndicatorBuilder:
-                        (context, url, downloadProgress) =>  Center(
+                        (context, url, downloadProgress) => Center(
                       child: SpinKitSpinningLines(
-                  color: Get.theme.primaryColor,
-                ),
+                        color: Get.theme.primaryColor,
+                      ),
                     ),
                     errorWidget: (context, url, error) => const Center(
                       child: Icon(
-                        Icons.error,
+                        Icons.error_rounded,
                       ),
                     ),
                   ),

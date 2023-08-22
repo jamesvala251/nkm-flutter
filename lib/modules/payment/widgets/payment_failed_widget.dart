@@ -90,7 +90,7 @@ class PaymentFailedWidget extends StatelessWidget {
             ),
             child: ElevatedButton(
               onPressed: () => paymentController.placeOrderApiCall(
-                paymentOption: CommonConstants.paymentOptionCash,
+                paymentMode: CommonConstants.paymentModeCash,
               ),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(

@@ -111,7 +111,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     .getCommonTextFormFiledDecorationForUpdateProfile(
                   label: 'full_name'.tr,
                   hintText: 'enter_full_name'.tr,
-                  iconData: Icons.person,
+                  iconData: Icons.person_rounded,
                   isDisabled: false,
                 ),
                 onChanged: (_) => isEdited(),
@@ -160,7 +160,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     .getCommonTextFormFiledDecorationForUpdateProfile(
                   label: 'l_email'.tr,
                   hintText: 'h_email'.tr,
-                  iconData: Icons.email,
+                  iconData: Icons.email_rounded,
                   isDisabled: true,
                 ),
               ),
@@ -188,7 +188,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     .getCommonTextFormFiledDecorationForUpdateProfile(
                   label: 'l_pan_no'.tr,
                   hintText: 'h_pan_no'.tr,
-                  iconData: Icons.credit_card,
+                  iconData: Icons.credit_card_rounded,
                   isDisabled: false,
                 ),
               ),
@@ -216,7 +216,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     .getCommonTextFormFiledDecorationForUpdateProfile(
                   label: 'l_gst_no'.tr,
                   hintText: 'h_gst_no'.tr,
-                  iconData: Icons.credit_card,
+                  iconData: Icons.credit_card_rounded,
                   isDisabled: false,
                 ),
               ),

@@ -25,10 +25,6 @@ class _GetGoldRateDetailWidgetState extends State<GetGoldRateDetailWidget> {
         left: 12,
         right: 12,
         bottom: 8,
-        // top: 12,
-        // left: 12,
-        // right: 12,
-        // bottom: 8,
       ),
       elevation: 3,
       shape: RoundedRectangleBorder(

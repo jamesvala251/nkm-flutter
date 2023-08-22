@@ -9,6 +9,7 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     //data communication method name
     private val getAndroidVersionMethod: String = "getAndroidVersion"
+    private val getVersionNameAndVersionCode: String = "getVersionNameAndVersionCode"
 
     //method channel and default variable initialization
     private val commonMethodChannel: String = "com.org.nkm_nose_pins_llp/common_channel"
@@ -19,12 +20,33 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         methodChannel = MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            commonMethodChannel
+            flutterEngine.dartExecutor.binaryMessenger, commonMethodChannel
         )
         methodChannel.setMethodCallHandler { call, result ->
             resultHandlers[commonMethodChannel] = result
             when (call.method) {
+
+                getVersionNameAndVersionCode -> {
+                    try {
+                        val versionName = BuildConfig.VERSION_NAME
+                        val versionCode = BuildConfig.VERSION_CODE
+                        val packageName = BuildConfig.APPLICATION_ID
+                        result.success(
+                            mapOf(
+                                "version_name" to versionName,
+                                "version_code" to versionCode,
+                                "package_name" to packageName
+                            )
+                        );
+                    } catch (e: Exception) {
+                        result.error(
+                            "Error Code: Failed to get Version Name & Code!",
+                            e.toString(),
+                            "Error Details: Failed to get Version Name and Version Code!"
+                        )
+                    }
+                }
+
                 getAndroidVersionMethod -> {
                     result.success(getAndroidVersion().toString().trim())
                 }
@@ -47,26 +69,4 @@ class MainActivity : FlutterActivity() {
             else -> if (SDK_INT >= 33) 100 else -1
         }
     }
-//
-//    fun getVersionCode(context: Context): Long {
-//        val packageManager = context.packageManager
-//        val packageName = context.packageName
-//
-//        val packageInfo = PackageManagerCompat.getPackageInfoCompat(packageManager, packageName, 0)
-//        return PackageInfoCompat.getLongVersionCode(packageInfo)
-//    }
-//
-//    fun getVersionName(context: Context): String {
-//        val packageManager = context.packageManager
-//        val packageName = context.packageName
-//
-//        val packageInfo = PackageManagerCompat.getPackageInfoCompat(packageManager, packageName, 0)
-//        return packageInfo.versionName
-//    }
-//
-//    // Usage example
-//    val versionCode = getVersionCode(context)
-//    val versionName = getVersionName(context)
-
-
 }

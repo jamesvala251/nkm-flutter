@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/images_path.dart';
 import 'package:nkm_nose_pins_llp/modules/register/controllers/register_controller.dart';
-import 'package:nkm_nose_pins_llp/utils/helpers/preference_obj.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/common_style.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/ui_utils.dart';
 
@@ -24,11 +23,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _gstNo = TextEditingController();
   final RegisterController _registerController = Get.put(RegisterController());
 
-  @override
-  void initState() {
-    super.initState();
-    PreferenceObj.setIsUserFirstTime();
-  }
 
   @override
   Widget build(BuildContext context) {

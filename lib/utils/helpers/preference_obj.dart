@@ -22,7 +22,6 @@ class PreferenceObj {
       Set<String> keysToRemove =
           _sharedPreferences.getKeys().toSet().difference(
         {
-          PreferencesConstants.isUserFirstTime, //Key need to keep
           PreferencesConstants.languageCode, //key need to keep
           PreferencesConstants.countryCode //key need to keep
         },
@@ -48,16 +47,6 @@ class PreferenceObj {
     return await _sharedPreferences.setString(
       PreferencesConstants.authToken,
       authToken,
-    );
-  }
-
-  static bool get getIsUserFirstTime =>
-      _sharedPreferences.getBool(PreferencesConstants.isUserFirstTime) ?? true;
-
-  static Future<bool> setIsUserFirstTime() async {
-    return await _sharedPreferences.setBool(
-      PreferencesConstants.isUserFirstTime,
-      false,
     );
   }
 

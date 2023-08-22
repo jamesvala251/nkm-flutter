@@ -3,9 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/api/api_implementer.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/models/add_design_to_cart_model.dart';
-import 'package:nkm_nose_pins_llp/modules/cart/models/decrease_qty_model.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/models/get_user_cart_item_model.dart';
-import 'package:nkm_nose_pins_llp/modules/cart/models/increase_qty_model.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/models/remove_design_from_cart_model.dart';
 import 'package:nkm_nose_pins_llp/utils/helpers/helper.dart';
 import 'package:nkm_nose_pins_llp/utils/ui/app_dialogs.dart';
@@ -25,41 +23,23 @@ class CartController extends GetxController {
     getUserCartApiCall();
   }
 
-  void addToOrderTotal({required int amountToAdd}) {
-    try {
-      orderTotal.value = orderTotal.value + amountToAdd;
-    } catch (_) {}
-  }
-
-  void minusFromOrderTotal({required int amountToMinus}) {
-    try {
-      orderTotal.value = orderTotal.value - amountToMinus;
-    } catch (_) {}
-  }
-
-  void getOrderTotalFromCartApi() async {
-    try {
-      GetUserCartItemsModel tempForTotal =
-          await ApiImplementer.getCartApiCall();
-      if (tempForTotal.success) {
-        orderTotal.value = tempForTotal.orderTotalAmount;
-        return;
-      }
-    } catch (_) {}
-  }
-
   void getUserCartApiCall() async {
     try {
       isLoadingCart.value = true;
       errorStringWhileLoadingCart.value = '';
       getUserCartItemsModel.value = await ApiImplementer.getCartApiCall();
-      if (getUserCartItemsModel.value!.success) {
-        cartItemCount.value = getUserCartItemsModel.value!.data.length;
-        orderTotal.value = getUserCartItemsModel.value!.orderTotalAmount;
+      if (getUserCartItemsModel.value!.success &&
+          getUserCartItemsModel.value!.data != null) {
+        cartItemCount.value =
+            getUserCartItemsModel.value!.data!.cartItemData.length;
+        orderTotal.value = getUserCartItemsModel.value!.data!.total;
         isLoadingCart.value = false;
         errorStringWhileLoadingCart.value = '';
         return;
       }
+      getUserCartItemsModel.value = null;
+      cartItemCount.value = 0;
+      orderTotal.value = 0;
       isLoadingCart.value = false;
       errorStringWhileLoadingCart.value = getUserCartItemsModel.value!.message;
       return;
@@ -78,9 +58,17 @@ class CartController extends GetxController {
     try {
       GetUserCartItemsModel tempGetUserCartItModel =
           await ApiImplementer.getCartApiCall();
-      getUserCartItemsModel.value = tempGetUserCartItModel;
-      orderTotal.value = tempGetUserCartItModel.orderTotalAmount;
-      cartItemCount.value = getUserCartItemsModel.value!.data.length;
+      if (tempGetUserCartItModel.success &&
+          tempGetUserCartItModel.data != null) {
+        getUserCartItemsModel.value = tempGetUserCartItModel;
+        orderTotal.value = tempGetUserCartItModel.data!.total;
+        cartItemCount.value =
+            getUserCartItemsModel.value!.data!.cartItemData.length;
+        return;
+      }
+      getUserCartItemsModel.value = null;
+      orderTotal.value = 0;
+      cartItemCount.value = 0;
       return;
     } catch (_) {
       return;
@@ -89,29 +77,20 @@ class CartController extends GetxController {
 
   Future<bool> addToCartApiCall({
     required BuildContext context,
-    required String designId,
-    required String goldKarat,
-    required int designQty,
-    required bool needToRefreshCart,
+    required int designId,
+    required int articleId,
+    required int caretId,
   }) async {
     try {
-      AppDialogs.showProgressDialog(
-        context: context,
-      );
       AddDesignToCartModel tempAddDesignToCartModel =
           await ApiImplementer.addDesignToCartApiCall(
         designId: designId,
-        goldKarat: goldKarat,
-        designQty: designQty,
+        articleId: articleId,
+        caretId: caretId,
       );
-      Get.back();
-      if (tempAddDesignToCartModel.success &&
-          tempAddDesignToCartModel.data != null) {
-        getOrderTotalFromCartApi();
-        if (needToRefreshCart) {
-          refreshCartApiCall();
-        }
-        cartItemCount.value = tempAddDesignToCartModel.data!.cartItemsCount;
+      if (tempAddDesignToCartModel.success) {
+        cartItemCount.value = tempAddDesignToCartModel.cartItemsCount;
+        orderTotal.value = tempAddDesignToCartModel.total;
         UiUtils.successSnackBar(message: tempAddDesignToCartModel.message);
         return true;
       }
@@ -123,7 +102,6 @@ class CartController extends GetxController {
       );
       return false;
     } on DioException catch (dioError) {
-      Get.back();
       String errMsg = Helper.getErrMsgFromDioError(
         dioError: dioError,
       );
@@ -135,7 +113,6 @@ class CartController extends GetxController {
       );
       rethrow;
     } catch (error) {
-      Get.back();
       AppDialogs.showInformationDialogue(
         context: context,
         title: 'err_occurred'.tr,
@@ -143,69 +120,12 @@ class CartController extends GetxController {
         onOkBntClick: () => Get.back(),
       );
       rethrow;
-    }
-  }
-
-  Future<int?> addToCartForDesignListApiCall({
-    required BuildContext context,
-    required String designId,
-    required String goldKarat,
-    required int designQty,
-  }) async {
-    try {
-      AppDialogs.showProgressDialog(
-        context: context,
-      );
-      AddDesignToCartModel tempAddDesignToCartModelNew =
-          await ApiImplementer.addDesignToCartApiCall(
-        designId: designId,
-        goldKarat: goldKarat,
-        designQty: designQty,
-      );
-      Get.back();
-      if (tempAddDesignToCartModelNew.success &&
-          tempAddDesignToCartModelNew.data != null) {
-        getOrderTotalFromCartApi();
-        cartItemCount.value = tempAddDesignToCartModelNew.data!.cartItemsCount;
-        UiUtils.successSnackBar(message: tempAddDesignToCartModelNew.message);
-        return tempAddDesignToCartModelNew.data!.cartItem!.id;
-      }
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: tempAddDesignToCartModelNew.message,
-        onOkBntClick: () => Get.back(),
-      );
-      return null;
-    } on DioException catch (dioError) {
-      Get.back();
-      String errMsg = Helper.getErrMsgFromDioError(
-        dioError: dioError,
-      );
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: errMsg,
-        onOkBntClick: () => Get.back(),
-      );
-      return null;
-    } catch (error) {
-      Get.back();
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: error.toString(),
-        onOkBntClick: () => Get.back(),
-      );
-      return null;
     }
   }
 
   Future<bool> removeFromCartApiCall({
     required BuildContext context,
-    required int designId,
-    required String goldKarat,
-    required int designQty,
+    required int itemId,
     required bool needToRefreshCart,
   }) async {
     try {
@@ -214,121 +134,22 @@ class CartController extends GetxController {
       );
       RemoveDesignFromCartModel removeDesignFromCartModel =
           await ApiImplementer.removeDesignFromCartApiCall(
-        designId: designId,
+        itemId: itemId,
       );
       Get.back();
-      if (removeDesignFromCartModel.success &&
-          removeDesignFromCartModel.data != null) {
-        getOrderTotalFromCartApi();
+      if (removeDesignFromCartModel.success) {
         if (needToRefreshCart) {
           refreshCartApiCall();
         }
-        cartItemCount.value = removeDesignFromCartModel.data!.cartItemsCount;
+        cartItemCount.value = removeDesignFromCartModel.cartItemsCount;
+        orderTotal.value = removeDesignFromCartModel.total;
         UiUtils.successSnackBar(message: removeDesignFromCartModel.message);
         return true;
       }
       AppDialogs.showInformationDialogue(
         context: context,
         title: 'err_occurred'.tr,
-        description: removeDesignFromCartModel!.message,
-        onOkBntClick: () => Get.back(),
-      );
-      return false;
-    } on DioException catch (dioError) {
-      Get.back();
-      String errMsg = Helper.getErrMsgFromDioError(
-        dioError: dioError,
-      );
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: errMsg,
-        onOkBntClick: () => Get.back(),
-      );
-      rethrow;
-    } catch (error) {
-      Get.back();
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: error.toString(),
-        onOkBntClick: () => Get.back(),
-      );
-      rethrow;
-    }
-  }
-
-  Future<bool> incQtyApiCall({
-    required BuildContext context,
-    required int userCartId,
-    required bool needToRefreshCart,
-  }) async {
-    try {
-      AppDialogs.showProgressDialog(
-        context: context,
-      );
-      IncreaseQuantityModel increaseQuantityModel =
-          await ApiImplementer.increaseQtyApiCall(userCartId: userCartId);
-      Get.back();
-      if (increaseQuantityModel.success) {
-        if (needToRefreshCart) {
-          refreshCartApiCall();
-        }
-        return true;
-      }
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: increaseQuantityModel.message,
-        onOkBntClick: () => Get.back(),
-      );
-      return false;
-    } on DioException catch (dioError) {
-      Get.back();
-      String errMsg = Helper.getErrMsgFromDioError(
-        dioError: dioError,
-      );
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: errMsg,
-        onOkBntClick: () => Get.back(),
-      );
-      rethrow;
-    } catch (error) {
-      Get.back();
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: error.toString(),
-        onOkBntClick: () => Get.back(),
-      );
-      rethrow;
-    }
-  }
-
-  Future<bool> decQtyApiCall({
-    required BuildContext context,
-    required int userCartId,
-    required bool needToRefreshCart,
-  }) async {
-    try {
-      AppDialogs.showProgressDialog(
-        context: context,
-      );
-      DecreaseQuantityModel decreaseQuantityModel =
-          await ApiImplementer.decreaseQtyApiCall(userCartId: userCartId);
-      Get.back();
-      if (decreaseQuantityModel.success) {
-        if (needToRefreshCart) {
-          refreshCartApiCall();
-        }
-        return true;
-      }
-      AppDialogs.showInformationDialogue(
-        context: context,
-        title: 'err_occurred'.tr,
-        description: decreaseQuantityModel.message,
+        description: removeDesignFromCartModel.message,
         onOkBntClick: () => Get.back(),
       );
       return false;

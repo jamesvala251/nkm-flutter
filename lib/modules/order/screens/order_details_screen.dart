@@ -29,7 +29,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         argumentMap[RouteConstants.orderHistoryListItemModel]
             as orderHistoryModelAs.Data;
     _orderHistoryController.getOrderDetailsApiCall(
-        orderId: orderHistoryListItemModel.orderId);
+      orderId: orderHistoryListItemModel.orderId,
+    );
   }
 
   @override
@@ -46,12 +47,15 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     .errorStringWhileLoadingOrderDetails.value.isEmpty
                 ? _getOrderDetailsWidget
                 : SomethingWentWrongWidget(
-                    retryOnSomethingWentWrong: () => _orderHistoryController
-                        .errorStringWhileLoadingOrderDetails.value,
+                    retryOnSomethingWentWrong: () {
+                      _orderHistoryController.getOrderDetailsApiCall(
+                        orderId: orderHistoryListItemModel.orderId,
+                      );
+                    },
                   ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: orderHistoryListItemModel.invoice.isNotEmpty
+      floatingActionButton: orderHistoryListItemModel.customerInvoice.isNotEmpty
           ? OrderInvoiceDownloadWidget(
               orderHistoryItemModel: orderHistoryListItemModel,
               orderHistoryController: Get.find<OrderHistoryController>(),
@@ -70,11 +74,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         ),
         child: ListView.builder(
           padding: const EdgeInsets.only(bottom: 100),
-          itemCount: _orderHistoryController.orderDetailsModel.data.length,
+          itemCount: _orderHistoryController
+              .orderDetailsModel.data!.articleDetail.length,
           itemBuilder: (ctx, index) => OrderHistoryListItemWidget(
             isFirstItem: index == 0,
-            orderDetailListItemModel:
-                _orderHistoryController.orderDetailsModel.data[index],
+            articleDetailsModel: _orderHistoryController
+                .orderDetailsModel.data!.articleDetail[index],
           ),
         ),
       );

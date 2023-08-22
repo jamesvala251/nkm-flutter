@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:nkm_nose_pins_llp/api/api_urls.dart';
 import 'package:nkm_nose_pins_llp/api/auth_token_dio_client.dart';
 import 'package:nkm_nose_pins_llp/api/dio_client.dart';
 import 'package:nkm_nose_pins_llp/constants/common_constants.dart';
@@ -9,13 +8,15 @@ import 'package:nkm_nose_pins_llp/modules/cart/models/get_user_cart_item_model.d
 import 'package:nkm_nose_pins_llp/modules/cart/models/increase_qty_model.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/models/remove_design_from_cart_model.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/design_category_model.dart';
-import 'package:nkm_nose_pins_llp/modules/dashboard/models/design_details_model.dart';
-import 'package:nkm_nose_pins_llp/modules/dashboard/models/design_list_model.dart';
-import 'package:nkm_nose_pins_llp/modules/dashboard/models/design_sub_category_model.dart';
+import 'package:nkm_nose_pins_llp/modules/design_list/models/design_list_model.dart';
+import 'package:nkm_nose_pins_llp/modules/refund_article/models/refund_article_list_model.dart';
+import 'package:nkm_nose_pins_llp/modules/refund_article/models/refund_article_model.dart';
+import 'package:nkm_nose_pins_llp/modules/sub_category/models/design_sub_category_model.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/get_user_profile_model.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/gold_rates_model.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/logout_model.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/models/version_info_model.dart';
+import 'package:nkm_nose_pins_llp/modules/design_article/models/design_article_model.dart';
 import 'package:nkm_nose_pins_llp/modules/payment/models/get_order_payment_status_model.dart';
 import 'package:nkm_nose_pins_llp/modules/profile/models/update_user_profile_model.dart';
 import 'package:nkm_nose_pins_llp/modules/login/models/get_otp_model.dart';
@@ -55,7 +56,7 @@ class ApiImplementer {
           "type": "login",
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return GetOtpModel.fromJson(response.data);
@@ -76,7 +77,7 @@ class ApiImplementer {
           "otp": otp,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return UserLoginModel.fromJson(response.data);
@@ -136,7 +137,7 @@ class ApiImplementer {
           "gold_caret": goldCaret,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return DesignCategoryModel.fromJson(response.data);
@@ -157,7 +158,7 @@ class ApiImplementer {
           "category_id": categoryId,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return DesignSubCategoryModel.fromJson(response.data);
@@ -173,9 +174,12 @@ class ApiImplementer {
     try {
       final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
         '$_nkmRoutePrefix/design-list',
-        data: {"gold_caret": goldCaret, "sub_category_id": subCategoryId},
+        data: {
+          "gold_caret": goldCaret,
+          "sub_category_id": subCategoryId,
+        },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return DesignListModel.fromJson(response.data);
@@ -195,46 +199,46 @@ class ApiImplementer {
     }
   }
 
-  static Future<DesignDetailsModel> getDesignDetailsApiCall({
-    required String designId,
-    required String goldKarat,
-    required int designQty,
-  }) async {
-    try {
-      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
-        '$_nkmRoutePrefix/design-details',
-        data: {
-          "design_id": designId,
-          "gold_caret": goldKarat,
-          "design_qty": designQty,
-        },
-        options: Options(
-          headers: ApiUrls.applicationJsonHeader,
-        ),
-      );
-      return DesignDetailsModel.fromJson(response.data);
-    } catch (error) {
-      rethrow;
-    }
-  }
+  // static Future<DesignDetailsModel> getDesignDetailsApiCall({
+  //   required String designId,
+  //   required String goldKarat,
+  //   required int designQty,
+  // }) async {
+  //   try {
+  //     final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
+  //       '$_nkmRoutePrefix/design-details',
+  //       data: {
+  //         "design_id": designId,
+  //         "gold_caret": goldKarat,
+  //         "design_qty": designQty,
+  //       },
+  //       options: Options(
+  //         headers: CommonConstants.applicationJsonHeader,
+  //       ),
+  //     );
+  //     return DesignDetailsModel.fromJson(response.data);
+  //   } catch (error) {
+  //     rethrow;
+  //   }
+  // }
 
   //Cart
 
   static Future<AddDesignToCartModel> addDesignToCartApiCall({
-    required String designId,
-    required String goldKarat,
-    required int designQty,
+    required int designId,
+    required int caretId,
+    required int articleId,
   }) async {
     try {
       final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
         '$_nkmRoutePrefix/add-to-cart',
         data: {
           "design_id": designId,
-          "gold_caret": goldKarat,
-          "design_qty": designQty,
+          "caret_id": caretId,
+          "article_id": articleId,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return AddDesignToCartModel.fromJson(response.data);
@@ -244,16 +248,16 @@ class ApiImplementer {
   }
 
   static Future<RemoveDesignFromCartModel> removeDesignFromCartApiCall({
-    required int designId,
+    required int itemId,
   }) async {
     try {
       final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
         '$_nkmRoutePrefix/remove-to-cart',
         data: {
-          "design_id": designId,
+          "item_id": itemId,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return RemoveDesignFromCartModel.fromJson(response.data);
@@ -272,7 +276,7 @@ class ApiImplementer {
           "user_cart_id": userCartId,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return IncreaseQuantityModel.fromJson(response.data);
@@ -291,7 +295,7 @@ class ApiImplementer {
           "user_cart_id": userCartId,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return DecreaseQuantityModel.fromJson(response.data);
@@ -313,14 +317,17 @@ class ApiImplementer {
 
   //Orders
   static Future<PlaceOrderModel> placeOrderApiCall({
-    required int paymentOption,
+    required int paymentMode,
   }) async {
     try {
-      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.get(
+      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
         '$_nkmRoutePrefix/place-order',
-        queryParameters: {
-          'payment_option': paymentOption,
+        data: {
+          'payment_mode': paymentMode,
         },
+        options: Options(
+          headers: CommonConstants.applicationJsonHeader,
+        ),
       );
       return PlaceOrderModel.fromJson(response.data);
     } catch (error) {
@@ -402,7 +409,7 @@ class ApiImplementer {
           "gst_no": gstNo,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return UpdateUserProfileModel.fromJson(response.data);
@@ -421,10 +428,84 @@ class ApiImplementer {
           "fcm_token": fcmToken,
         },
         options: Options(
-          headers: ApiUrls.applicationJsonHeader,
+          headers: CommonConstants.applicationJsonHeader,
         ),
       );
       return;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<DesignArticleModel> getDesignArticleApiCall({
+    required int designId,
+  }) async {
+    try {
+      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.get(
+        '$_nkmRoutePrefix/design-article-detail',
+        queryParameters: {
+          "design_id": designId,
+        },
+      );
+      return DesignArticleModel.fromJson(response.data);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<RefundArticleListModel> getRefundArticleListApiCall({
+    required int page,
+  }) async {
+    try {
+      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.get(
+        '$_nkmRoutePrefix/get-refund-article',
+        queryParameters: {
+          "page": page,
+        },
+      );
+      return RefundArticleListModel.fromJson(response.data);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<RefundArticleListModel> getFilteredRefundArticleListApiCall({
+    required int page,
+    required int articleNumber,
+  }) async {
+    try {
+      Map<String, dynamic> reqParams = {
+        "page": page,
+      };
+
+      if (articleNumber != -1) {
+        reqParams.putIfAbsent("article_number", () => articleNumber);
+      }
+
+      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.get(
+        '$_nkmRoutePrefix/get-refund-article',
+        queryParameters: reqParams,
+      );
+      return RefundArticleListModel.fromJson(response.data);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  static Future<RefundArticleModel> refundArticleApiCall({
+    required int articleNumber,
+  }) async {
+    try {
+      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
+        '$_nkmRoutePrefix/article-refund',
+        data: {
+          "article_number": articleNumber,
+        },
+        options: Options(
+          headers: CommonConstants.applicationJsonHeader,
+        ),
+      );
+      return RefundArticleModel.fromJson(response.data);
     } catch (error) {
       rethrow;
     }

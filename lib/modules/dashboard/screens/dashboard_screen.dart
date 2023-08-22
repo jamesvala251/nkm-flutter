@@ -81,7 +81,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 label: 'home'.tr,
               ),
               BottomNavigationBarItem(
-                icon: const Icon(Icons.person_rounded),
+                icon: const Icon(Icons.account_circle_rounded),
                 label: 'profile'.tr,
               ),
             ],

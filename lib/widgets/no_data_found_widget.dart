@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/constants/images_path.dart';
 
@@ -22,7 +21,7 @@ class NoDataFoundWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           icon == null
-              ? SvgPicture.asset(
+              ? Image.asset(
                   ImagesPath.noDataFound,
                   height: 200.0,
                   width: 200.0,
@@ -34,7 +33,8 @@ class NoDataFoundWidget extends StatelessWidget {
           Text(
             infoTxt.isEmpty ? 'no_data_found'.tr : infoTxt,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
+              color: Get.theme.primaryColor,
               fontSize: 14,
             ),
           ),

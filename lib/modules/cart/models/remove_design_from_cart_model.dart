@@ -1,10 +1,9 @@
 class RemoveDesignFromCartModel {
-  late Data? _data;
   late String _message;
   late bool _success;
   late int _statusCode;
-
-  Data? get data => _data;
+  late int _cartItemsCount;
+  late int _total;
 
   String get message => _message;
 
@@ -12,21 +11,16 @@ class RemoveDesignFromCartModel {
 
   int get statusCode => _statusCode;
 
+  int get cartItemsCount => _cartItemsCount;
+
+  int get total => _total;
+
   RemoveDesignFromCartModel.fromJson(Map<String, dynamic> json) {
-    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
     _message =
         json['message'] ?? 'msg key null in remove design from cart api!';
     _success = json['success'] ?? false;
     _statusCode = json['status_code'] ?? -1;
-  }
-}
-
-class Data {
-  late int _cartItemsCount;
-
-  int get cartItemsCount => _cartItemsCount;
-
-  Data.fromJson(Map<String, dynamic> json) {
     _cartItemsCount = json['cart_items_count'] ?? 0;
+    _total = json['total'] ?? 0;
   }
 }

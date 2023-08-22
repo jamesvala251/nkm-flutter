@@ -4,6 +4,7 @@ import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/images_path.dart';
 import 'package:nkm_nose_pins_llp/modules/cart/controllers/cart_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/payment/controllers/payment_controller.dart';
+import 'package:nkm_nose_pins_llp/utils/ui/app_dialogs.dart';
 
 class PaymentOptionSelectionWidget extends StatelessWidget {
   PaymentOptionSelectionWidget({super.key});
@@ -78,126 +79,160 @@ class PaymentOptionSelectionWidget extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16, horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => selectedPaymentMethod.value =
-                            PaymentMethod.qrScanner,
-                        child: Container(
-                          padding: const EdgeInsets.all(2.0),
-                          decoration: BoxDecoration(
-                            color: selectedPaymentMethod.value ==
-                                    PaymentMethod.qrScanner
-                                ? Get.theme.primaryColor
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
+                child: IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => selectedPaymentMethod.value =
+                              PaymentMethod.qrScanner,
                           child: Container(
+                            padding: const EdgeInsets.all(2.0),
                             decoration: BoxDecoration(
                               color: selectedPaymentMethod.value ==
                                       PaymentMethod.qrScanner
                                   ? Get.theme.primaryColor
                                   : Colors.white,
-                              borderRadius: BorderRadius.circular(16.0),
-                              border: Border.all(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
                                 color: selectedPaymentMethod.value ==
                                         PaymentMethod.qrScanner
-                                    ? const Color(0xFFFFE998)
-                                    : Get.theme.primaryColor,
+                                    ? Get.theme.primaryColor
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(16.0),
+                                border: Border.all(
+                                  color: selectedPaymentMethod.value ==
+                                          PaymentMethod.qrScanner
+                                      ? const Color(0xFFFFE998)
+                                      : Get.theme.primaryColor,
+                                ),
                               ),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    ImagesPath.cashPaymentIcon,
-                                    height: 64,
-                                    width: 64,
-                                  ),
-                                  const SizedBox(
-                                    height: 4.0,
-                                  ),
-                                  Text(
-                                    "scan_qr".tr,
-                                    style: TextStyle(
-                                      fontSize:
-                                          Get.textTheme.titleLarge!.fontSize,
-                                      color: selectedPaymentMethod.value ==
-                                              PaymentMethod.qrScanner
-                                          ? Colors.white
-                                          : Get.theme.primaryColor,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 8.0),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      ImagesPath.selfPickup,
+                                      height: 64,
+                                      width: 64,
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      height: 4.0,
+                                    ),
+                                    Text(
+                                      "self_pickup".tr,
+                                      style: TextStyle(
+                                        fontSize:
+                                            Get.textTheme.titleLarge!.fontSize,
+                                        color: selectedPaymentMethod.value ==
+                                                PaymentMethod.qrScanner
+                                            ? Colors.white
+                                            : Get.theme.primaryColor,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 4.0,
+                                    ),
+                                    Text(
+                                      "no_additional_fees_on_self_pickup".tr,
+                                      style: TextStyle(
+                                        fontSize:
+                                            Get.textTheme.labelMedium!.fontSize,
+                                        color: selectedPaymentMethod.value ==
+                                                PaymentMethod.qrScanner
+                                            ? Colors.white
+                                            : Get.theme.primaryColor,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () =>
-                            selectedPaymentMethod.value = PaymentMethod.online,
-                        child: Container(
-                          padding: const EdgeInsets.all(2.0),
-                          decoration: BoxDecoration(
-                            color: selectedPaymentMethod.value ==
-                                    PaymentMethod.online
-                                ? Get.theme.primaryColor
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => selectedPaymentMethod.value =
+                              PaymentMethod.online,
                           child: Container(
+                            padding: const EdgeInsets.all(2.0),
                             decoration: BoxDecoration(
                               color: selectedPaymentMethod.value ==
                                       PaymentMethod.online
                                   ? Get.theme.primaryColor
                                   : Colors.white,
-                              borderRadius: BorderRadius.circular(16.0),
-                              border: Border.all(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
                                 color: selectedPaymentMethod.value ==
                                         PaymentMethod.online
-                                    ? const Color(0xFFFFE998)
-                                    : Get.theme.primaryColor,
+                                    ? Get.theme.primaryColor
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(16.0),
+                                border: Border.all(
+                                  color: selectedPaymentMethod.value ==
+                                          PaymentMethod.online
+                                      ? const Color(0xFFFFE998)
+                                      : Get.theme.primaryColor,
+                                ),
                               ),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    ImagesPath.onlinePaymentIcon,
-                                    height: 64,
-                                    width: 64,
-                                  ),
-                                  const SizedBox(
-                                    height: 4.0,
-                                  ),
-                                  Text(
-                                    "online".tr,
-                                    style: TextStyle(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 8.0),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      ImagesPath.onlinePaymentIcon,
+                                      height: 64,
+                                      width: 64,
+                                    ),
+                                    const SizedBox(
+                                      height: 4.0,
+                                    ),
+                                    Text(
+                                      "online".tr,
+                                      style: TextStyle(
+                                          fontSize: Get
+                                              .textTheme.titleLarge!.fontSize,
+                                          color: selectedPaymentMethod.value ==
+                                                  PaymentMethod.online
+                                              ? Colors.white
+                                              : Get.theme.primaryColor),
+                                    ),
+                                    const SizedBox(
+                                      height: 4.0,
+                                    ),
+                                    Text(
+                                      "an_additional_fees_on_online".tr,
+                                      style: TextStyle(
                                         fontSize:
-                                            Get.textTheme.titleLarge!.fontSize,
+                                            Get.textTheme.labelMedium!.fontSize,
                                         color: selectedPaymentMethod.value ==
                                                 PaymentMethod.online
                                             ? Colors.white
-                                            : Get.theme.primaryColor),
-                                  ),
-                                ],
+                                            : Get.theme.primaryColor,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -208,29 +243,50 @@ class PaymentOptionSelectionWidget extends StatelessWidget {
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.back();
                     if (selectedPaymentMethod.value ==
                         PaymentMethod.qrScanner) {
-                      Get.toNamed(
-                        AppRoutes.qrScannerPaymentScreen,
-                      )!
-                          .then((_) {
-                        _cartController.refreshCartApiCall();
-                        Get.offNamedUntil(
-                          AppRoutes.dashboardScreen,
-                          (route) => false,
-                        );
-                        return;
-                      });
-                      return;
+                      AppDialogs.showAlertDialog(
+                          context: context,
+                          title: "are_you_sure".tr,
+                          description: "your_order_will_approved_shortly".tr,
+                          firstButtonName: "cancel".tr,
+                            secondButtonName: "okay".tr,
+                          onFirstButtonClicked: () => Get.back(),
+                          isDismissible: true,
+                          onSecondButtonClicked: () {
+                            Get.back();
+                            Get.toNamed(
+                              AppRoutes.qrScannerPaymentScreen,
+                            )!
+                                .then((_) {
+                              _cartController.refreshCartApiCall();
+                              Get.offNamedUntil(
+                                AppRoutes.dashboardScreen,
+                                (route) => false,
+                              );
+                              return;
+                            });
+                            return;
+                          });
                     } else {
+                      Get.back();
                       Get.toNamed(AppRoutes.onlinePaymentScreen)!
-                          .then((result) {
+                          .then((receivedResult) async {
                         _cartController.refreshCartApiCall();
-                        Get.offNamedUntil(
-                          AppRoutes.dashboardScreen,
-                          (route) => false,
-                        );
+                        if (receivedResult != null && receivedResult) {
+                          // await Get.offNamedUntil(
+                          //   AppRoutes.dashboardScreen,
+                          //   (route) => false,
+                          // );
+                          Get.toNamed(AppRoutes.orderHistoryScreen);
+                          // await Get.offNamedUntil(
+                          //   AppRoutes.dashboardScreen,
+                          //   (route) => false,
+                          // )?.then((value) {
+                          //   return;
+                          // });
+                          return;
+                        }
                         return;
                       });
                       return;

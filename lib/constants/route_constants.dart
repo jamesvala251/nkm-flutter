@@ -13,4 +13,6 @@ class RouteConstants {
   static const String orderHistoryListItemModel = 'order_list_item_model';
   static const String severity = "severity";
   static const String packageName = "package_name";
+  static const String designId = "designId";
+  static const String designName = "designName";
 }

@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.2+3
 
 environment:
   sdk: '>=3.0.1 <4.0.0'
@@ -12,24 +12,26 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
-  dio: ^5.2.0+1
-  flutter_svg: ^2.0.6
-  flutter_web_browser: ^0.17.1
-  image_picker: ^0.8.7+5
-  permission_handler: ^10.3.0
-  share_plus: ^7.0.2
-  shared_preferences: ^2.1.2
-  url_launcher: ^6.1.11
-  in_app_update: ^4.0.1
+  dio: ^5.3.2
+  pretty_dio_logger: ^1.3.1
+  flutter_svg: ^2.0.7
+  permission_handler: ^10.4.3
+  share_plus: ^7.1.0
+  shared_preferences: ^2.2.0
   cached_network_image: ^3.2.3
   badges: ^3.1.1
-  video_player: ^2.6.1
+  video_player: ^2.7.0
   path_provider: ^2.0.15
-  open_file: ^3.3.1
-  firebase_core: ^2.13.1
-  firebase_analytics: ^10.4.2
-  firebase_messaging: ^14.6.2
-  firebase_dynamic_links: ^5.3.2
+  open_file: ^3.3.2
+  firebase_core: ^2.15.0
+  firebase_analytics: ^10.4.4
+  firebase_messaging: ^14.6.5
+  firebase_dynamic_links: ^5.3.4
+  store_redirect: ^2.0.1
+  lottie: ^2.5.0
+  webview_flutter: ^4.2.2
+  intl: ^0.18.1
+
 
 dev_dependencies:
   flutter_test:
@@ -43,8 +45,8 @@ flutter:
 
   assets:
     - assets/svg/
-    - assets/png/flags/
     - assets/png/
+    - assets/lottie/
 
   fonts:
     - family: proxima_nova_regular

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/api/api_implementer.dart';
-import 'package:nkm_nose_pins_llp/modules/cart/controllers/cart_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/payment/models/place_order_model.dart';
 import 'package:nkm_nose_pins_llp/utils/helpers/helper.dart';
 
@@ -15,35 +14,34 @@ class PaymentController extends GetxController {
   final RxString errorStringWhileLoadingOrder = ''.obs;
   late PlaceOrderModel placeOrderModel;
 
-  void placeOrderApiCall({
-    required int paymentOption,
+  Future<bool> placeOrderApiCall({
+    required int paymentMode,
   }) async {
     try {
       isLoadingOrder.value = true;
       errorStringWhileLoadingOrder.value = '';
       placeOrderModel = await ApiImplementer.placeOrderApiCall(
-        paymentOption: paymentOption,
+        paymentMode: paymentMode,
       );
       if (placeOrderModel.success) {
-        Get.find<CartController>().getOrderTotalFromCartApi();
         isLoadingOrder.value = false;
         errorStringWhileLoadingOrder.value = '';
-        return;
+        return true;
       }
       isLoadingOrder.value = false;
       errorStringWhileLoadingOrder.value = placeOrderModel.message;
-      return;
+      return false;
     } on DioException catch (dioError) {
       String errMsg = Helper.getErrMsgFromDioError(
         dioError: dioError,
       );
       isLoadingOrder.value = false;
       errorStringWhileLoadingOrder.value = errMsg;
-      return;
+      return false;
     } catch (error) {
       isLoadingOrder.value = false;
       errorStringWhileLoadingOrder.value = error.toString();
-      return;
+      return false;
     }
   }
 }

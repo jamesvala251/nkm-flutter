@@ -10,10 +10,16 @@ class AppRoutes {
   static const String orderHistoryScreen = '/Order-History-Screen';
   static const String orderDetailsScreen = '/Order-Details-Screen';
   static const String zoomableImageViewScreen = '/Zoomable-Image-View-Screen';
-  static const String categoryDesignDetailsScreen =
-      '/Category-Design-Details-Screen';
+
+  // static const String categoryDesignDetailsScreen =
+  //     '/Category-Design-Details-Screen';
   static const String videoViewScreen = '/Video-View-Screen';
+  static const String listingImageViewScreen = '/Listing-Image-View-Screen';
   static const String languageScreen = '/Language-Screen';
   static const String updateProfileScreen = '/Update-Profile-Screen';
   static const String updateAppScreen = '/UpdateApp-Screen';
+  static const String designArticleScreen = '/Design-Article-Screen';
+  static const String refundArticleListScreen = '/Refund-Article-List-Screen';
+  static const String refundArticleFilterScreen =
+      '/Refund-Article-Filter-Screen';
 }

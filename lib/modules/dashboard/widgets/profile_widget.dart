@@ -16,23 +16,20 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Obx(
-        () => profileController.isProfileLoading.value
-            ? const LoadingWidget()
-            : profileController.errorStringWhileLoadingProfile.isEmpty
-                ? _getUserProfileWidget(
-                    context: context,
-                  )
-                : SomethingWentWrongWidget(
-                    errorTxt: profileController
-                        .errorStringWhileLoadingProfile.value,
-                    retryOnSomethingWentWrong: () {
-                      profileController.getUserProfileApiCall();
-                    },
-                  ),
-      ),
+    return Obx(
+      () => profileController.isProfileLoading.value
+          ? const LoadingWidget()
+          : profileController.errorStringWhileLoadingProfile.isEmpty
+              ? _getUserProfileWidget(
+                  context: context,
+                )
+              : SomethingWentWrongWidget(
+                  errorTxt:
+                      profileController.errorStringWhileLoadingProfile.value,
+                  retryOnSomethingWentWrong: () {
+                    profileController.getUserProfileApiCall();
+                  },
+                ),
     );
   }
 
@@ -46,10 +43,16 @@ class ProfileWidget extends StatelessWidget {
         children: [
           Card(
             elevation: 4,
-            margin: EdgeInsets.zero,
+            margin: const EdgeInsets.only(
+              top: 12,
+              left: 12,
+              right: 12,
+              bottom: 10,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  8), // Adjust the border radius as desired
+                8,
+              ), // Adjust the border radius as desired
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -103,7 +106,7 @@ class ProfileWidget extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(
-                                    Icons.person,
+                                    Icons.person_rounded,
                                     size: Get.textTheme.titleSmall!.fontSize,
                                     color: Get.theme.primaryColor,
                                   ),
@@ -178,15 +181,18 @@ class ProfileWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
           Card(
             elevation: 4,
-            margin: EdgeInsets.zero,
+            margin: const EdgeInsets.only(
+              top: 6,
+              left: 12,
+              right: 12,
+              bottom: 10,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  8), // Adjust the border radius as desired
+                8,
+              ), // Adjust the border radius as desired
             ),
             child: InkWell(
               onTap: () => Get.toNamed(AppRoutes.updateProfileScreen)!.then(
@@ -202,7 +208,7 @@ class ProfileWidget extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.person,
+                      Icons.person_rounded,
                       color: Get.theme.primaryColor,
                     ),
                     const SizedBox(
@@ -225,15 +231,18 @@ class ProfileWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
           Card(
             elevation: 4,
-            margin: EdgeInsets.zero,
+            margin: const EdgeInsets.only(
+              top: 6,
+              left: 12,
+              right: 12,
+              bottom: 10,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  8), // Adjust the border radius as desired
+                8,
+              ), // Adjust the border radius as desired
             ),
             child: InkWell(
               onTap: () {
@@ -270,15 +279,66 @@ class ProfileWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 16,
+          Card(
+            elevation: 4,
+            margin: const EdgeInsets.only(
+              top: 6,
+              left: 12,
+              right: 12,
+              bottom: 10,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                8,
+              ), // Adjust the border radius as desired
+            ),
+            child: InkWell(
+              onTap: () {
+                Get.toNamed(AppRoutes.refundArticleListScreen);
+              },
+              borderRadius: BorderRadius.circular(8),
+              highlightColor: Colors.transparent,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.rotate_left_rounded,
+                      color: Get.theme.primaryColor,
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Text(
+                      'refund_article'.tr,
+                      style: TextStyle(
+                        color: Get.theme.primaryColor,
+                        fontSize: Get.textTheme.titleMedium!.fontSize,
+                      ),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.arrow_forward_rounded,
+                      color: Get.theme.primaryColor,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
           Card(
             elevation: 4,
-            margin: EdgeInsets.zero,
+            margin: const EdgeInsets.only(
+              top: 6,
+              left: 12,
+              right: 12,
+              bottom: 10,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  8), // Adjust the border radius as desired
+                8,
+              ), // Adjust the border radius as desired
             ),
             child: InkWell(
               onTap: () {
@@ -315,12 +375,14 @@ class ProfileWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 16,
-          ),
           Card(
             elevation: 4,
-            margin: EdgeInsets.zero,
+            margin: const EdgeInsets.only(
+              top: 6,
+              left: 12,
+              right: 12,
+              bottom: 10,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
                 8,
@@ -366,7 +428,7 @@ class ProfileWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 32,
+            height: 22,
           ),
           Obx(
             () => Text(

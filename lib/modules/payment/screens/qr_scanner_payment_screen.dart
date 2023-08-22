@@ -19,7 +19,7 @@ class _QrScannerPaymentScreenState extends State<QrScannerPaymentScreen> {
   @override
   void initState() {
     _paymentController.placeOrderApiCall(
-      paymentOption: CommonConstants.paymentOptionCash,
+      paymentMode: CommonConstants.paymentModeCash,
     );
     super.initState();
   }
