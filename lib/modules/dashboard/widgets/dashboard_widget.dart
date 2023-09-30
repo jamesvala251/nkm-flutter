@@ -19,58 +19,62 @@ class DashboardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => dashboardController.isLoadingGoldRates.value
-          ? const LoadingWidget()
-          : dashboardController.goldRateErrorString.isEmpty
-              ? dashboardController.goldRateCategoryList.isNotEmpty
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _getDesignCategorySelectionWidget,
-                        Expanded(
-                          child: Obx(
-                            () => dashboardController
-                                    .isLoadingDesignCategory.value
-                                ? const LoadingWidget()
-                                : dashboardController
-                                        .errorStringWhileLoadingDesignCategory
-                                        .isEmpty
-                                    ? dashboardController
-                                            .categoryList.isNotEmpty
-                                        ? _getCategoryListWidget
-                                        : NoDataFoundWidget(
-                                            retryOn: () => dashboardController
-                                                .getDesignCategoryApiCallNew(
-                                              goldCaret: dashboardController
-                                                  .selectedKarat.value,
-                                            ),
-                                          )
-                                    : SomethingWentWrongWidget(
-                                        errorTxt: dashboardController
-                                            .errorStringWhileLoadingDesignCategory
-                                            .value,
-                                        retryOnSomethingWentWrong: () =>
-                                            dashboardController
-                                                .getDesignCategoryApiCallNew(
-                                          goldCaret: dashboardController
-                                              .selectedKarat.value,
-                                        ),
-                                      ),
-                          ),
+      () {
+        return  dashboardController.isLoadingGoldRates.value
+            ? const LoadingWidget()
+            : dashboardController.goldRateErrorString.isEmpty
+            ? dashboardController.goldRateCategoryList.isNotEmpty
+            ? Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _getDesignCategorySelectionWidget,
+            Expanded(
+              child: Obx(
+                    () {
+                  return dashboardController
+                      .isLoadingDesignCategory.value
+                      ? const LoadingWidget()
+                      : dashboardController
+                      .errorStringWhileLoadingDesignCategory
+                      .isEmpty
+                      ? dashboardController
+                      .categoryList.isNotEmpty
+                      ? _getCategoryListWidget
+                      : NoDataFoundWidget(
+                    retryOn: () => dashboardController
+                        .getDesignCategoryApiCallNew(
+                      goldCaret: dashboardController
+                          .selectedKarat.value,
+                    ),
+                  )
+                      : SomethingWentWrongWidget(
+                    errorTxt: dashboardController
+                        .errorStringWhileLoadingDesignCategory
+                        .value,
+                    retryOnSomethingWentWrong: () =>
+                        dashboardController
+                            .getDesignCategoryApiCallNew(
+                          goldCaret: dashboardController
+                              .selectedKarat.value,
                         ),
-                      ],
-                    )
-                  : SomethingWentWrongWidget(
-                      errorTxt: dashboardController.goldRateErrorString.value,
-                      retryOnSomethingWentWrong: () =>
-                          dashboardController.getGoldRatesApiCall(),
-                    )
-              : SomethingWentWrongWidget(
-                  errorTxt: dashboardController.goldRateErrorString.value,
-                  retryOnSomethingWentWrong: () =>
-                      dashboardController.getGoldRatesApiCall(),
-                ),
+                  );
+                },
+              ),
+            ),
+          ],
+        )
+            : SomethingWentWrongWidget(
+          errorTxt: dashboardController.goldRateErrorString.value,
+          retryOnSomethingWentWrong: () =>
+              dashboardController.getGoldRatesApiCall(),
+        )
+            : SomethingWentWrongWidget(
+          errorTxt: dashboardController.goldRateErrorString.value,
+          retryOnSomethingWentWrong: () =>
+              dashboardController.getGoldRatesApiCall(),
+        );
+      },
     );
   }
 
