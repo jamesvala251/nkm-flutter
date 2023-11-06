@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/routes/app_routes.dart';
 import 'package:nkm_nose_pins_llp/constants/route_constants.dart';
+import 'package:nkm_nose_pins_llp/constants/string_extention.dart';
 import 'package:nkm_nose_pins_llp/custom_libs/spin_kit/spinning_lines.dart';
 import 'package:nkm_nose_pins_llp/modules/sub_category/controllers/sub_category_controller.dart';
 import 'package:nkm_nose_pins_llp/modules/sub_category/models/design_sub_category_model.dart'
@@ -40,12 +41,13 @@ class SubCategoryDesignListItemWidget extends StatelessWidget {
               RouteConstants.subCategoryId:
                   subCateItem.subCategoryId.toString(),
             },
-          )?.then((value) {
-            subCategoryController.refreshSubCategoryApiCall(
-              goldCaret: goldKarat,
-              categoryId: categoryId,
-            );
-          });
+          );
+          //     ?.then((value) {
+          //   subCategoryController.refreshSubCategoryApiCall(
+          //     goldCaret: goldKarat,
+          //     categoryId: categoryId,
+          //   );
+          // });
         },
         highlightColor: Colors.transparent,
         borderRadius: BorderRadius.circular(12),
@@ -88,7 +90,7 @@ class SubCategoryDesignListItemWidget extends StatelessWidget {
                     horizontal: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: Get.theme.primaryColor,
+                    color: goldKarat.caratBGColo(),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(12),
                       bottomRight: Radius.circular(12),

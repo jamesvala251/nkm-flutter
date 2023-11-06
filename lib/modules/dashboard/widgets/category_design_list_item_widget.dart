@@ -40,9 +40,10 @@ class CategoryDesignListItemWidget extends StatelessWidget {
               RouteConstants.categoryId:
                   designCategoryItemModel.categoryId.toString(),
             },
-          )?.then((value) {
-            dashboardController.getGoldRatesApiCall();
-          });
+          );
+          //     ?.then((value) {
+          //   dashboardController.getGoldRatesApiCall();
+          // });
         },
         highlightColor: Colors.transparent,
         borderRadius: BorderRadius.circular(12.0),
