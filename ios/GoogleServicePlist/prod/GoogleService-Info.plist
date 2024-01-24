@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>534290823844-76uhk2hqn5jj38bpld8qhuhjqponvntf.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBGNdr0ZZGssYoLzyqBWrLjU0ALUodBH3A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>534290823844</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.nkmnosepinsllp</string>
+	<key>PROJECT_ID</key>
+	<string>nkm-nose-pins-llp-80f0b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nkm-nose-pins-llp-80f0b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:534290823844:ios:f69d8f8f125be542e0c431</string>
+</dict>
+</plist>

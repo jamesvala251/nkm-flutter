@@ -97,6 +97,7 @@ class ProfileController extends GetxController {
       if (fcmToken.trim().isEmpty) {
         return;
       }
+      debugPrint("FCM Token: $fcmToken");
       await ApiImplementer.updateFcmTokenApiCall(fcmToken: fcmToken);
       return;
     } catch (err) {

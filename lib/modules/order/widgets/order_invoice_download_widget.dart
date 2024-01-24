@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/modules/order/controllers/order_history_controller.dart';
@@ -46,10 +48,15 @@ class OrderInvoiceDownloadWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () async {
-          if (await orderHistoryController.askForStoragePermission(
-              context: context)) {
+          if (Platform.isAndroid) {
+            if (await orderHistoryController.askForStoragePermission(
+                context: context)) {
+              orderHistoryItemModel.downloadOrderInvoice();
+            }
+          } else {
             orderHistoryItemModel.downloadOrderInvoice();
           }
+          // orderHistoryItemModel.downloadOrderInvoice();
         },
         highlightColor: Colors.transparent,
         borderRadius: !isCircularTypeCard

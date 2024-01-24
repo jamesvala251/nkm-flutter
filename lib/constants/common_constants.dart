@@ -118,6 +118,6 @@ class CommonConstants {
     storageBucket: 'nkm-llp-dev.appspot.com',
     iosClientId:
         '561690903886-lfg4kgfum4gg9f0jltti8bk8i9onp8m7.apps.googleusercontent.com',
-    iosBundleId: 'com.org.nkmnosepinsllp.dev',
+    iosBundleId: 'com.nkmnosepinsllp.dev',
   );
 }

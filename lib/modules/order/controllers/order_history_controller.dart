@@ -52,11 +52,15 @@ class OrderHistoryController extends GetxController {
       if (orderInvoiceFilesLocalStorageDirectory != null) {
         return orderInvoiceFilesLocalStorageDirectory!.path;
       }
+      final Directory? directory;
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory();
 
-      final Directory? directory = await getExternalStorageDirectory();
-
-      if (directory == null) {
-        throw Exception('Directory Not Found!');
+        if (directory == null) {
+          throw Exception('Directory Not Found!');
+        }
+      } else {
+        directory = await getApplicationDocumentsDirectory();
       }
 
       orderInvoiceFilesLocalStorageDirectory = Directory(

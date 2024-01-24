@@ -7,8 +7,8 @@ import 'package:nkm_nose_pins_llp/config/theme/app_theme.dart';
 import 'package:nkm_nose_pins_llp/utils/helpers/preference_obj.dart';
 import 'package:nkm_nose_pins_llp/utils/services/language_service.dart';
 
-class RootWidget extends StatelessWidget {
-  const RootWidget({super.key});
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {

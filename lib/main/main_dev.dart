@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:nkm_nose_pins_llp/config/env/env_config.dart';
 import 'package:nkm_nose_pins_llp/constants/common_constants.dart';
 import 'package:nkm_nose_pins_llp/modules/dashboard/controllers/dashboard_controller.dart';
-import 'package:nkm_nose_pins_llp/root_widget.dart';
+import 'package:nkm_nose_pins_llp/main_app.dart';
 import 'package:nkm_nose_pins_llp/utils/helpers/preference_obj.dart';
 
 Future<void> main() async {
@@ -27,11 +27,13 @@ Future<void> main() async {
       tag: CommonConstants.dashboardControllerTag,
     );
   }
-  await Firebase.initializeApp(
-    options: Platform.isAndroid
-        ? CommonConstants.firebaseOptionsAndroidDev
-        : CommonConstants.firebaseOptionsIosDev,
-  );
+  if (Platform.isAndroid) {
+    await Firebase.initializeApp(
+      options: CommonConstants.firebaseOptionsAndroidDev,
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
@@ -42,7 +44,7 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]).then(
     (_) async {
-      runApp(const RootWidget());
+      runApp(const MainApp());
     },
   );
 }
