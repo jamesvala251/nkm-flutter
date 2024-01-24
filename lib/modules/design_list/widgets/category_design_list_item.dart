@@ -58,13 +58,14 @@ class CategoryDesignListItem extends StatelessWidget {
                                       cateDesignListItem.name,
                                   RouteConstants.goldKarat: goldKarat,
                                 },
-                              )?.then((result) {
-                                categoryDesignListController
-                                    .refreshSubCategoryDesignList(
-                                  goldCaret: goldKarat,
-                                  subCategoryId: subCategoryId,
-                                );
-                              }),
+                              ),
+                              //     ?.then((result) {
+                              //   categoryDesignListController
+                              //       .refreshSubCategoryDesignList(
+                              //     goldCaret: goldKarat,
+                              //     subCategoryId: subCategoryId,
+                              //   );
+                              // }),
                               highlightColor: Colors.transparent,
                               child: Center(
                                 child: Transform.scale(
@@ -184,13 +185,14 @@ class CategoryDesignListItem extends StatelessWidget {
                                             cateDesignListItem.name,
                                         RouteConstants.goldKarat: goldKarat,
                                       },
-                                    )?.then((result) {
-                                      categoryDesignListController
-                                          .refreshSubCategoryDesignList(
-                                        goldCaret: goldKarat,
-                                        subCategoryId: subCategoryId,
-                                      );
-                                    }),
+                                    ),
+                                    //     ?.then((result) {
+                                    //   categoryDesignListController
+                                    //       .refreshSubCategoryDesignList(
+                                    //     goldCaret: goldKarat,
+                                    //     subCategoryId: subCategoryId,
+                                    //   );
+                                    // }),
                                     highlightColor: Colors.transparent,
                                     borderRadius: BorderRadius.circular(12),
                                     child: Obx(
