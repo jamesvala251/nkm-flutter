@@ -91,7 +91,7 @@ class CategoryDesignListItemWidget extends StatelessWidget {
                   ),
                   child: CachedNetworkImage(
                     imageUrl: designCategoryItemModel.categoryImage,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) => Center(
                       child: SpinKitSpinningLines(

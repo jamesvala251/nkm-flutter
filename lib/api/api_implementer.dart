@@ -510,4 +510,22 @@ class ApiImplementer {
       rethrow;
     }
   }
+
+  static Future<void> deactivateUser({
+    required bool isDeactivate,
+  }) async {
+    try {
+      Map<String, dynamic> reqParams = {
+        'deactivate_profile': isDeactivate ? 1 : 0,
+      };
+
+      final response = await AuthTokenDioClient.getAuthTokenDioClient()!.post(
+        '$_nkmRoutePrefix/deactivate-user',
+        data: reqParams,
+      );
+      return;
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

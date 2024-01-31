@@ -169,6 +169,8 @@ class LocaleString extends Translations {
           'your_order_will_approved_shortly': 'your order will be approved shortly.',
           'delete_item': 'Delete Item?',
           'are_you_sure_to_delete': 'Are you sure want to delete this item from cart?',
+          'delete_account': 'Delete Account',
+          'are_you_sure_to_delete_account': 'Are you sure want to delete your account?',
         },
         'hi_IN': {
           'welcome': 'स्वागत है,',
@@ -336,6 +338,8 @@ class LocaleString extends Translations {
           'your_order_will_approved_shortly': 'आपका ऑर्डर शीघ्र ही स्वीकृत हो जाएगा।',
           'delete_item': 'आइटम हटाएं?',
           'are_you_sure_to_delete': 'क्या आप वाकई इस आइटम को कार्ट से हटाना चाहते हैं?',
+          'delete_account': 'खाता हटा दो',
+          'are_you_sure_to_delete_account': 'क्या आप इस खाते को हटाना चाहते हैं?',
         },
       };
 }
