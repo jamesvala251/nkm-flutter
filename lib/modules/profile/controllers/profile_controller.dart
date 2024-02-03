@@ -97,6 +97,7 @@ class ProfileController extends GetxController {
       if (fcmToken.trim().isEmpty) {
         return;
       }
+      debugPrint("FCM Token: $fcmToken");
       await ApiImplementer.updateFcmTokenApiCall(fcmToken: fcmToken);
       return;
     } catch (err) {
@@ -183,6 +184,40 @@ class ProfileController extends GetxController {
         context: context,
       );
       await ApiImplementer.logoutApiCall();
+      await PreferenceObj.clearPreferenceDataAndLogout();
+      Get.offAllNamed(AppRoutes.loginScreen);
+    } on DioException catch (dioError) {
+      Get.back();
+      String errMsg = Helper.getErrMsgFromDioError(
+        dioError: dioError,
+      );
+      AppDialogs.showInformationDialogue(
+        context: context,
+        title: 'err_occurred'.tr,
+        description: errMsg,
+        onOkBntClick: () => Get.back(),
+      );
+      rethrow;
+    } catch (error) {
+      Get.back();
+      AppDialogs.showInformationDialogue(
+        context: context,
+        title: 'err_occurred'.tr,
+        description: error.toString(),
+        onOkBntClick: () => Get.back(),
+      );
+      rethrow;
+    }
+  }
+
+  Future<void> deleteAccountAPICall({
+    required BuildContext context,
+  }) async {
+    try {
+      AppDialogs.showProgressDialog(
+        context: context,
+      );
+      await ApiImplementer.deactivateUser(isDeactivate: true);
       await PreferenceObj.clearPreferenceDataAndLogout();
       Get.offAllNamed(AppRoutes.loginScreen);
     } on DioException catch (dioError) {

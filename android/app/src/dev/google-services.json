@@ -29,6 +29,13 @@
             {
               "client_id": "561690903886-91adf56sp4it6uh0cd3jub4e2qgh5re7.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "561690903886-lfg4kgfum4gg9f0jltti8bk8i9onp8m7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.org.nkmnosepinsllp.dev"
+              }
             }
           ]
         }

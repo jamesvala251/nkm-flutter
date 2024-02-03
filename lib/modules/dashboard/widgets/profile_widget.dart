@@ -427,6 +427,26 @@ class ProfileWidget extends StatelessWidget {
               ),
             ),
           ),
+          TextButton(
+            onPressed: () {
+              AppDialogs.showAlertDialogWithResult(
+                  context: context,
+                  title: 'delete_account'.tr,
+                  description: 'are_you_sure_to_delete_account'.tr,
+                  firstButtonName: 'yes'.tr,
+                  secondButtonName: 'no'.tr,
+                  onFirstButtonClicked: () {
+                    Get.back();
+                    profileController.deleteAccountAPICall(
+                      context: context,
+                    );
+                  },
+                  onSecondButtonClicked: () {
+                    Get.back();
+                  });
+            },
+            child: Text('delete_account'.tr),
+          ),
           const SizedBox(
             height: 22,
           ),
